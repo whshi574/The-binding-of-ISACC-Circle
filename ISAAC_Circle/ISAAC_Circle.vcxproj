@@ -157,11 +157,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameLog.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Factory.h" />
-    <ClInclude Include="Hero.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
