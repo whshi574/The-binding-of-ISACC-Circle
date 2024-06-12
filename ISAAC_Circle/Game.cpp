@@ -8,13 +8,8 @@ m_windowWidth(800),
 m_windowHeight(600)
 {
     m_window = new sf::RenderWindow(sf::VideoMode(m_windowWidth, m_windowHeight), m_windowTitle);
-
-    auto logger = spdlog::get("Game_logger");
-    
-    if (logger)
-    {
-        logger->info("Game object created");
-    }
+    m_windowResolution.x = m_windowWidth;
+    m_windowResolution.y = m_windowHeight;
 }
 
 Game::Game(const std::string windowTitle, const unsigned windowWidth, const unsigned windowHeight)
@@ -24,7 +19,8 @@ Game::Game(const std::string windowTitle, const unsigned windowWidth, const unsi
     m_windowHeight = windowHeight;
     
     m_window = new sf::RenderWindow(sf::VideoMode(m_windowWidth, m_windowHeight), m_windowTitle);
-    
+    m_windowResolution.x = m_windowWidth;
+    m_windowResolution.y = m_windowHeight;
 }
 
 Game::Game(const std::string windowTitle, const unsigned windowWidth, const unsigned windowHeight,
@@ -44,6 +40,8 @@ Game::Game(const std::string windowTitle, const unsigned windowWidth, const unsi
     
     m_window = new sf::RenderWindow(sf::VideoMode(m_windowWidth, m_windowHeight), m_windowTitle);
     m_window->setIcon(m_icon->getSize().x, m_icon->getSize().y, m_icon->getPixelsPtr());
+    m_windowResolution.x = m_windowWidth;
+    m_windowResolution.y = m_windowHeight;
 }
 
 Game::~Game()
@@ -63,8 +61,11 @@ void Game::runLoop()
     if (m_window == nullptr)
     {
         SPDLOG_ERROR("No Render window is created");
+        LOG_GAME(spdlog::level::err, "No Render window is created");
         return;
     }
+    
+    LOG_GAME(spdlog::level::info, "Game loop started");
     
     while (m_window->isOpen())
     {
@@ -74,6 +75,8 @@ void Game::runLoop()
         updateTick(deltaTime);
         renderTick(deltaTime);
     }
+
+    LOG_GAME(spdlog::level::info, "Game loop ended");
 }
 
 void Game::renderTick(sf::Time deltaTime)
@@ -101,4 +104,34 @@ void Game::handleEventsTick(sf::Time deltaTime)
             break;
         }
     }
+}
+
+sf::RenderWindow* Game::GetWindow() const
+{
+    return m_window;
+}
+
+std::string Game::GetWindowTitle() const
+{
+    return m_windowTitle;
+}
+
+unsigned Game::GetWindowWidth() const
+{
+    return m_windowWidth;
+}
+
+unsigned Game::GetWindowHeight() const
+{
+    return m_windowHeight;
+}
+
+sf::Time Game::GetDeltaTime() const
+{
+    return deltaTime;
+}
+
+sf::Vector2u Game::GetWindowResolution() const
+{
+    return m_windowResolution;
 }
