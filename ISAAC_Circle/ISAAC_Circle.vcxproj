@@ -144,7 +144,6 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="SfmlProject.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
