@@ -1,10 +1,11 @@
 #include "Game.h"
 #include "spdlog/spdlog.h"
-#include "Animation\AnimationActor.h"
-#include "Animation\AnimationSequence.h"
-#include "Animation\SpriteAnimationClip.h"
-#include "Tools\SFMLTool.h"
-#include "Tools\GameLog.h"
+#include "..\Animation\AnimationActor.h"
+#include "..\Animation\AnimationSequence.h"
+#include "..\Animation\SpriteAnimationClip.h"
+#include "..\Tools\SFMLTool.h"
+#include "..\Tools\GameLog.h"
+#include "..\Tools\TextureParser.h"
 
 Game::Game():
 m_windowTitle("Default Game"),
@@ -75,24 +76,35 @@ void Game::runLoop()
     
     m_animationActor = new AnimationActor(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
     AnimationSequence* sequence = m_animationActor->createAnimationSequence();
-    
+
+    sf::Sprite sprite_bg;
+    sf::Texture texture_bg;
+    loadAndSetSprite(sprite_bg, texture_bg, "Resource/images/cutscenes/intro_bg.png");
+    sprite_bg.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
+    sprite_bg.setScale(sf::Vector2f(3.f, 3.f));
+        
     sf::Sprite sprite;
     sf::Texture texture;
-    
-    loadAndSetSprite(sprite, texture, "Resource/images/cutscenes/intro_bg.png");
-    sprite.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
-    sprite.setScale(sf::Vector2f(3.f, 3.f));
-
     sf::Sprite sprite1;
     sf::Texture texture1;
+
+    sf::Vector2f testPos(1200, 940);
+    loadAndSetSprite(sprite, texture, "Resource/images/cutscenes/intro1.png");
+    TextureParser textureParser("Resource/images/cutscenes/intro1.json", sprite);
     
-    loadAndSetSprite(sprite1, texture1, "Resource/images/items/pick ups/isaacbed.png");
-    sprite1.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
-    sprite1.setScale(sf::Vector2f(3.f, 3.f));
+    sprite.setTextureRect(textureParser.GetDataByName("intro1_6"));
+    sprite.setPosition(testPos);
+    sprite.setScale(sf::Vector2f(2.f, 2.f));
     
-    sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite, 1.0f));
-    sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite1, 1.0f));
+    loadAndSetSprite(sprite1, texture1, "Resource/images/cutscenes/intro1.png");
+    sprite1.setPosition(testPos);
+    sprite1.setTextureRect(textureParser.GetDataByName("intro1_7"));
+    sprite1.setScale(sf::Vector2f(2.f, 2.f));
+    
+    sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite, 0.1f));
+    sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite1, 0.1f));
     m_animationActor->playAnimation(true);
+    
     //---------------END DEBUG CODE-------------
     while (m_window->isOpen())
     {
@@ -100,6 +112,8 @@ void Game::runLoop()
 
         handleEventsTick(deltaTime);
         updateTick(deltaTime);
+        m_window->clear();
+        m_window->draw(sprite_bg);
         renderTick(deltaTime);
     }
 
@@ -108,7 +122,7 @@ void Game::runLoop()
 
 void Game::renderTick(sf::Time deltaTime)
 {
-    m_window->clear();
+    //m_window->clear();
     m_animationActor->render(*m_window);
     m_window->display();
 }

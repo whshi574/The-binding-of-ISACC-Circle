@@ -74,7 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\Output\$(Platform)\$(Configuration)\</OutDir>
     <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);</ExecutablePath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Source</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,8 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/SFML-2.6.1/include; $(ProjectDir)/Source;$(SolutionDir)spdlog\include;</AdditionalIncludeDirectories>
-      <AdditionalBMIDirectories>$(SolutionDir)\SFML-2.6.1\include</AdditionalBMIDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source;$(SolutionDir)\spdlog\include;$(SolutionDir)\nlohmannjson\include\include;$(SolutionDir)\SFML-2.6.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/SFML-2.6.1/include; $(ProjectDir)/Source;$(SolutionDir)spdlog\include;$(ProjectDir)Source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SFML-2.6.1\include;$(ProjectDir)/Source;$(SolutionDir)spdlog\include;$(SolutionDir)nlohmannjson\include\single_include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -519,6 +518,7 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="Source\Tools\SFMLTool.cpp" />
+    <ClCompile Include="Source\Tools\TextureParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AI\Enemy.h" />
@@ -532,6 +532,7 @@
     <ClInclude Include="Source\Core\Game.h" />
     <ClInclude Include="Source\Tools\GameLog.h" />
     <ClInclude Include="Source\Tools\SFMLTool.h" />
+    <ClInclude Include="Source\Tools\TextureParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
