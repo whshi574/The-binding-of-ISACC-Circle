@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "Game.h"
-#include "GameLog.h"
+#include "Core/Game.h"
+#include "Tools/GameLog.h"
 
 int main()
 {

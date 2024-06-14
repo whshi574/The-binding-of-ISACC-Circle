@@ -19,5 +19,15 @@ private:
 };
 
 #define LOG_GAME(level, message) GameLogger::getGameLoggerInstance()->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, level, message)
+#define LOG_GAME_TRACE(message) LOG_GAME(spdlog::level::trace, message)
+#define LOG_GAME_DEBUG(message) LOG_GAME(spdlog::level::debug, message)
+#define LOG_GAME_INFO(message) LOG_GAME(spdlog::level::info, message)
+#define LOG_GAME_WARN(message) LOG_GAME(spdlog::level::warn, message)
+#define LOG_GAME_ERROR(message) LOG_GAME(spdlog::level::err, message)
+#define LOG_GAME_CRITICAL(message) LOG_GAME(spdlog::level::critical, message)
+#define LOG_GAME_OFF(message) LOG_GAME(spdlog::level::off, message)
+
+
+
 
 #endif // MACROS_H

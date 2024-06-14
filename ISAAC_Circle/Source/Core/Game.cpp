@@ -1,6 +1,10 @@
 #include "Game.h"
 #include "spdlog/spdlog.h"
-#include "GameLog.h"
+#include "Animation\AnimationActor.h"
+#include "Animation\AnimationSequence.h"
+#include "Animation\SpriteAnimationClip.h"
+#include "Tools\SFMLTool.h"
+#include "Tools\GameLog.h"
 
 Game::Game():
 m_windowTitle("Default Game"),
@@ -66,7 +70,30 @@ void Game::runLoop()
     }
     
     LOG_GAME(spdlog::level::info, "Game loop started");
+
+    //----------------DEBUG CODE----------------
     
+    m_animationActor = new AnimationActor(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
+    AnimationSequence* sequence = m_animationActor->createAnimationSequence();
+    
+    sf::Sprite sprite;
+    sf::Texture texture;
+    
+    loadAndSetSprite(sprite, texture, "Resource/images/cutscenes/intro_bg.png");
+    sprite.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
+    sprite.setScale(sf::Vector2f(3.f, 3.f));
+
+    sf::Sprite sprite1;
+    sf::Texture texture1;
+    
+    loadAndSetSprite(sprite1, texture1, "Resource/images/items/pick ups/isaacbed.png");
+    sprite1.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
+    sprite1.setScale(sf::Vector2f(3.f, 3.f));
+    
+    sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite, 1.0f));
+    sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite1, 1.0f));
+    m_animationActor->playAnimation(true);
+    //---------------END DEBUG CODE-------------
     while (m_window->isOpen())
     {
         deltaTime = m_TickClock.restart();
@@ -82,11 +109,13 @@ void Game::runLoop()
 void Game::renderTick(sf::Time deltaTime)
 {
     m_window->clear();
+    m_animationActor->render(*m_window);
     m_window->display();
 }
 
 void Game::updateTick(sf::Time deltaTime)
 {
+    m_animationActor->update(deltaTime);
 }
 
 void Game::handleEventsTick(sf::Time deltaTime)

@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include <thread>
 
+class AnimationActor;
 
 /* Game.h
  * 
@@ -43,4 +44,11 @@ public:
     unsigned int GetWindowHeight() const;
     sf::Time GetDeltaTime() const;
     sf::Vector2u GetWindowResolution() const;
+
+
+
+
+//------Debug------//
+public:
+    AnimationActor* m_animationActor;
 };
