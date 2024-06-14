@@ -1,7 +1,7 @@
 #include "TextureParser.h"
 #include <fstream>
 #include <spdlog/spdlog.h>
-#include "Tools/GameLog.h"
+#include "GameLog.h"
 #include "SFML/Graphics.hpp"
 
 

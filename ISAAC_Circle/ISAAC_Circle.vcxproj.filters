@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{11d62ed3-1c31-48c5-bb56-5a9ee3a71a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tools">
+      <UniqueIdentifier>{3aa039b3-3be1-42f4-bcc3-5d8ad98238e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -46,10 +52,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Tools\SFMLTool.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Source\Tools\TextureParser.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,14 +86,20 @@
     <ClInclude Include="Source\Core\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Tools\GameLog.h">
+    <ClInclude Include="Source\ThirdParty\nlohmann\json.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ThirdParty\nlohmann\json_fwd.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tools\GameLog.h">
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tools\SFMLTool.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tools\TextureParser.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

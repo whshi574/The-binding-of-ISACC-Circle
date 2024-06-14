@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source;$(SolutionDir)\spdlog\include;$(SolutionDir)\nlohmannjson\include\include;$(SolutionDir)\SFML-2.6.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\spdlog\include;$(SolutionDir)\nlohmannjson\include\include;$(SolutionDir)\SFML-2.6.1\include;$(ProjectDir)Source;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -530,6 +530,8 @@
     <ClInclude Include="Source\Animation\SpriteAnimationClip.h" />
     <ClInclude Include="Source\Core\Actor.h" />
     <ClInclude Include="Source\Core\Game.h" />
+    <ClInclude Include="Source\ThirdParty\nlohmann\json.hpp" />
+    <ClInclude Include="Source\ThirdParty\nlohmann\json_fwd.hpp" />
     <ClInclude Include="Source\Tools\GameLog.h" />
     <ClInclude Include="Source\Tools\SFMLTool.h" />
     <ClInclude Include="Source\Tools\TextureParser.h" />
