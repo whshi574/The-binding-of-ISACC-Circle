@@ -7,8 +7,6 @@ void loadAndSetSprite(sf::Sprite& sprite, sf::Texture& texture, const std::strin
     //Set Game Icon info
     if (texture.loadFromFile(filePath)) {
         sprite.setTexture(texture);
-        const sf::FloatRect textBounds = sprite.getLocalBounds();
-        sprite.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
     }
     else {
         // Save error message to log file
@@ -20,4 +18,10 @@ void AlignedCenterText(sf::Text& text)
 {
     sf::FloatRect textBounds = text.getLocalBounds();
     text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+}
+
+void AlignedCenterSprite(sf::Sprite& sprite)
+{
+    const sf::FloatRect textBounds = sprite.getLocalBounds();
+    sprite.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
 }

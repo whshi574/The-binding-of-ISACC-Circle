@@ -82,24 +82,28 @@ void Game::runLoop()
     loadAndSetSprite(sprite_bg, texture_bg, "Resource/images/cutscenes/intro_bg.png");
     sprite_bg.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
     sprite_bg.setScale(sf::Vector2f(3.f, 3.f));
+    AlignedCenterSprite(sprite_bg);
         
     sf::Sprite sprite;
     sf::Texture texture;
     sf::Sprite sprite1;
-    sf::Texture texture1;
 
-    sf::Vector2f testPos(1200, 940);
+
     loadAndSetSprite(sprite, texture, "Resource/images/cutscenes/intro1.png");
+    
     TextureParser textureParser("Resource/images/cutscenes/intro1.json", sprite);
     
     sprite.setTextureRect(textureParser.GetDataByName("intro1_6"));
-    sprite.setPosition(testPos);
+    AlignedCenterSprite(sprite);
     sprite.setScale(sf::Vector2f(2.f, 2.f));
+    sprite.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
     
-    loadAndSetSprite(sprite1, texture1, "Resource/images/cutscenes/intro1.png");
-    sprite1.setPosition(testPos);
+    //loadAndSetSprite(sprite1, texture, "Resource/images/cutscenes/intro1.png");
+    sprite1.setTexture(texture);
     sprite1.setTextureRect(textureParser.GetDataByName("intro1_7"));
+    AlignedCenterSprite(sprite1);
     sprite1.setScale(sf::Vector2f(2.f, 2.f));
+    sprite1.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
     
     sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite, 0.1f));
     sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite1, 0.1f));

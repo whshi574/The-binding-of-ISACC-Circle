@@ -5,3 +5,5 @@
 void loadAndSetSprite(sf::Sprite& sprite, sf::Texture& texture, const std::string& filePath);
 
 void AlignedCenterText(sf::Text& text);
+
+void AlignedCenterSprite(sf::Sprite& sprite);
