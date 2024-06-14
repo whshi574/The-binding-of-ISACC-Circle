@@ -87,8 +87,7 @@ void Game::runLoop()
     sf::Sprite sprite;
     sf::Texture texture;
     sf::Sprite sprite1;
-
-
+    
     loadAndSetSprite(sprite, texture, "Resource/images/cutscenes/intro1.png");
     
     TextureParser textureParser("Resource/images/cutscenes/intro1.json", sprite);
