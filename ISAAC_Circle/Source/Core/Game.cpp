@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "spdlog/spdlog.h"
-#include "..\Animation\AnimationActor.h"
+#include "Animation\AnimationActor.h"
 #include "..\Animation\AnimationSequence.h"
 #include "..\Animation\SpriteAnimationClip.h"
 #include "..\Tools\SFMLTool.h"
