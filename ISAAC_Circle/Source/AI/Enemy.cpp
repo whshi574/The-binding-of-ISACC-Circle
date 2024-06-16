@@ -43,6 +43,10 @@ void enemy_base::cause_damage_to_self(float damage)
     health_ -= damage;
 }
 
+void enemy1::Attack()
+{
+}
+
 void enemy_base::set_move_direction(const sf::Glsl::Vec2& vec2)
 {
     move_direction_=vec2;

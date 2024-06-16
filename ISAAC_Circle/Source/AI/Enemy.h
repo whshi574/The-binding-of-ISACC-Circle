@@ -27,7 +27,7 @@ public:
         /**
      * @brief enemy Attack Function
      * 
-     * Do attack action,yuancheng or jincheng, so it needs to set to pure virtual 
+        * Do attack action,yuancheng or jinzhan, so it needs to set to pure virtual 
      */
     virtual void Attack()=0;
     
@@ -46,5 +46,11 @@ private:
     std::shared_ptr<hero_base> attack_target_;
     //health
     float health_;
-    
+};
+class enemy1 : public enemy_base
+{
+public:
+    enemy1()=default;
+    ~enemy1() override =default;
+    void Attack() override;
 };
