@@ -365,6 +365,7 @@
       <AdditionalBMIDirectories>E:\DeveloperKits_And_IDE\SFML\Project\ISAAC_Circle\\SFML-2.6.1\include</AdditionalBMIDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Source\AI\Observer.cpp" />
     <ClCompile Include="Source\Animation\AnimationActor.cpp" />
     <ClCompile Include="Source\Animation\AnimationClip.cpp" />
     <ClCompile Include="Source\Animation\AnimationSequence.cpp" />
@@ -524,6 +525,7 @@
     <ClInclude Include="Source\AI\Enemy.h" />
     <ClInclude Include="Source\AI\Factory.h" />
     <ClInclude Include="Source\AI\Hero.h" />
+    <ClInclude Include="Source\AI\Observer.h" />
     <ClInclude Include="Source\Animation\AnimationActor.h" />
     <ClInclude Include="Source\Animation\AnimationClip.h" />
     <ClInclude Include="Source\Animation\AnimationSequence.h" />
