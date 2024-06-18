@@ -11,7 +11,7 @@ factory_hero::~factory_hero()
 
 std::shared_ptr<hero_base> factory_hero::create_object(int type)
 {
-    return std::make_shared<hero_base>();
+    return std::make_shared<hero_base>(sf::Vector2f(0,0));
 }
 
 factory_enemy::factory_enemy()
@@ -22,7 +22,7 @@ factory_enemy::~factory_enemy()
 
 std::shared_ptr<enemy_base> factory_enemy::create_object(int type)
 {
-    return std::make_shared<enemy1>();
+    return std::make_shared<enemy1>(std::make_shared<hero_base>(sf::Vector2f(0,0)),sf::Vector2f(0,0));
 }
 
 
