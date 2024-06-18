@@ -16,8 +16,8 @@ public:
     
     void set_move_speed(float move_speed);
     float get_move_speed() const;
-    sf::Glsl::Vec2 get_move_direction() const;
-    void set_move_direction(const sf::Glsl::Vec2& vec2);
+    sf::Vector2f get_move_direction() const;
+    void set_move_direction(const sf::Vector2f& vec2);
     
     /**
      * @brief enemy moveFunction
@@ -38,6 +38,9 @@ public:
     void cause_damage_to_self(float damage);
 
     float calculate_distance();
+
+    void set_attack_distance(float distance);
+    float get_attack_distance() const;
     //Actor override
     void update(const sf::Time& delta) override;
     void render(sf::RenderWindow& window) override;
@@ -45,7 +48,10 @@ public:
     
 private:
     //Control the Enemy Move Direction
-    sf::Glsl::Vec2 move_direction_;
+    sf::Vector2f move_direction_;
+
+    //Attack distance
+    float attack_distance_;
     
     //move speed
     float speed;

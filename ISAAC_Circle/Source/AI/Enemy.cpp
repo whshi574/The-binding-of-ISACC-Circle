@@ -1,8 +1,9 @@
 #include "Enemy.h"
 #include <cmath>
 #include "Hero.h"
-enemy_base::enemy_base(std::shared_ptr<hero_base> attack_target, const sf::Vector2f& position):Actor(position),move_direction_(sf::Glsl::Vec2(0, 0)), speed(0),attack_damage_(0),
-                                                                 attack_target_(std::move(attack_target)), health_(100)
+enemy_base::enemy_base(std::shared_ptr<hero_base> attack_target, const sf::Vector2f& position):Actor(position),move_direction_(sf::Vector2f(0, 0)),
+    attack_distance_(20), speed(0),
+    attack_damage_(0), attack_target_(std::move(attack_target)), health_(100)
 {
 }
 
@@ -16,7 +17,7 @@ float enemy_base::get_move_speed() const
     return speed;
 }
 
-sf::Glsl::Vec2 enemy_base::get_move_direction() const
+sf::Vector2f enemy_base::get_move_direction() const
 {
     return move_direction_;
 }
@@ -45,9 +46,25 @@ float enemy_base::calculate_distance()
     return distance;
 }
 
+void enemy_base::set_attack_distance(float distance)
+{
+    attack_distance_=distance;
+}
+
+float enemy_base::get_attack_distance() const
+{
+    return attack_distance_;
+}
+
 void enemy_base::update(const sf::Time& delta)
 {
-    
+    if(calculate_distance()<attack_distance_)
+    {
+        Attack();
+    }else
+    {
+        move();
+    }
 }
 
 void enemy_base::render(sf::RenderWindow& window)
@@ -67,7 +84,7 @@ void enemy1::Attack()
 {
 }
 
-void enemy_base::set_move_direction(const sf::Glsl::Vec2& vec2)
+void enemy_base::set_move_direction(const sf::Vector2f& vec2)
 {
     move_direction_=vec2;
 }
