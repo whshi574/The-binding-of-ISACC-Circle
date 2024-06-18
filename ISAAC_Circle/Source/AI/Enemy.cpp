@@ -24,8 +24,8 @@ sf::Glsl::Vec2 enemy_base::get_move_direction() const
 
 void enemy_base::move()
 {
-    float angle = std::atan2(move_direction_.y, move_direction_.x);
-    const sf::Vector2f temp_vec2(getPosition().x+speed*cos(angle),getPosition().y+speed*sin(angle));
+    const float angle = std::atan2(move_direction_.y, move_direction_.x);
+    const sf::Vector2f temp_vec2(m_position.x+speed*cos(angle),m_position.y+speed*sin(angle));
     setPosition(temp_vec2);
 }
 
@@ -41,7 +41,7 @@ void enemy_base::cause_damage_to_self(float damage)
 
 float enemy_base::calculate_distance()
 {
-    const float distance=std::sqrt(std::pow(getPosition().x-attack_target_->getPosition().x,2)+std::pow(getPosition().y-attack_target_->getPosition().y,2));
+    const float distance=std::sqrt(std::pow(m_position.x-attack_target_->getPosition().x,2)+std::pow(m_position.y-attack_target_->getPosition().y,2));
     return distance;
 }
 
