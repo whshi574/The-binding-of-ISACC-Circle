@@ -14,7 +14,16 @@ private:
 
     //Unity texture coordinate system is different from SFML's texture coordinate system.
     void ModifyJsonData(sf::Sprite& sprite);
+
+public:
+    void readJsonFile(const std::string jsonFilePath);
 public:
     // Get sub-texture data from json file.
     sf::IntRect GetDataByName(const std::string name);
+
+    // Get all sub-texture names from json file. Please provide a empty vector to store the names.
+    void GetAllNames(std::vector<std::string>& names);
+
+    // Print all sub-texture names to console quickly.
+    void PrintAllNamesToConsole();
 };

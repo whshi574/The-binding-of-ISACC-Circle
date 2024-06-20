@@ -7,23 +7,8 @@
 
 TextureParser::TextureParser(std::string jsonFilePath, sf::Sprite& sprite)
 {
-    std::ifstream f(jsonFilePath);
-
-    // Check if the file stream is open
-    if (!f.is_open()) {
-        SPDLOG_ERROR("Open json file failed, please check your texture json file path.");
-        LOG_GAME_ERROR("Open json file failed, please check your texture json file path.");
-        // Handle the error, perhaps exit the program or throw an exception
-        return; // Return an error code indicating failure
-    }
-
-    m_jsonData = new nlohmann::json();
-    *m_jsonData = nlohmann::json::parse(f);
-
+    readJsonFile(jsonFilePath);
     ModifyJsonData(sprite);
-    
-    // Close the file stream, when we're parsing is done
-    f.close();
 }
 
 TextureParser::~TextureParser()
@@ -44,6 +29,32 @@ void TextureParser::ModifyJsonData(sf::Sprite& sprite)
         tar_y = tar_y - height;
         item["Y"] = tar_y;
     }
+}
+
+void TextureParser::readJsonFile(const std::string jsonFilePath)
+{
+    std::ifstream f(jsonFilePath);
+
+    // Check if the file stream is open
+    if (!f.is_open()) {
+        SPDLOG_ERROR("Open json file failed, please check your texture json file path.");
+        LOG_GAME_ERROR("Open json file failed, please check your texture json file path.");
+        // Handle the error, perhaps exit the program or throw an exception
+        return; // Return an error code indicating failure
+    }
+
+    if (m_jsonData != nullptr){
+        //You are trying to override a json data
+        SPDLOG_WARN("You are trying to override a json data.");
+        LOG_GAME_WARN("You are trying to override a json data.");
+        delete m_jsonData;
+    }
+
+    m_jsonData = new nlohmann::json();
+    *m_jsonData = nlohmann::json::parse(f);
+
+    // Close the file stream, when we're parsing is done
+    f.close();
 }
 
 sf::IntRect TextureParser::GetDataByName(const std::string name)
@@ -78,4 +89,37 @@ sf::IntRect TextureParser::GetDataByName(const std::string name)
     SPDLOG_ERROR("Can't find your data by name: {}, please check your texture json file content or your input name.", name);
     LOG_GAME_ERROR("Can't find your data by name: {}, please check your texture json file content or your input name.", name);
     return sf::IntRect{0,0,0,0};
+}
+
+void TextureParser::GetAllNames(std::vector<std::string>& names)
+{
+    if (m_jsonData == nullptr)
+    {
+        SPDLOG_ERROR("Json data is null, please check your texture json file path.");
+        LOG_GAME_ERROR("Json data is null, please check your texture json file path.");
+        return;
+    }
+
+    names.clear();
+
+    for (auto& item : (*m_jsonData)["info"])
+    {
+        names.push_back(item["Name"]);
+    }
+}
+
+void TextureParser::PrintAllNamesToConsole()
+{
+    if (m_jsonData == nullptr)
+    {
+        SPDLOG_ERROR("Json data is null, please check your texture json file path.");
+        LOG_GAME_ERROR("Json data is null, please check your texture json file path.");
+        return;
+    }
+
+    for (auto& item : (*m_jsonData)["info"])
+    {
+        std::string name = item["Name"];
+        SPDLOG_INFO("Sub Texture Name: {}", name);
+    }
 }
