@@ -3,6 +3,7 @@
 #include <thread>
 
 class AnimationActor;
+class World;
 
 /* Game.h
  * 
@@ -17,6 +18,7 @@ public:
 
 public:
     void runLoop();
+    void init();
     
 private:
     void renderTick(sf::Time deltaTime);
@@ -51,4 +53,8 @@ public:
 //------Debug------//
 public:
     AnimationActor* m_animationActor;
+
+    bool isSHIWEIHAO_TestWorld;    
+    World* SHIWEIHAO_TestWorld;
+    World* LUOJIAWEN_TestWorld;
 };

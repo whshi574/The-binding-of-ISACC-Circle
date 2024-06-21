@@ -7,6 +7,8 @@
 AnimationSequence::AnimationSequence()
 {
     LOG_GAME_INFO("One Animation sequence created.");
+
+    nowPlayingTime = new sf::Time(sf::seconds(0));
 }
 
 AnimationSequence::~AnimationSequence()
@@ -33,6 +35,7 @@ void AnimationSequence::nextClip()
         if (isLooping)
         {
             currentIndex = 0;
+            *nowPlayingTime = sf::seconds(0);
         }else
         {
             isPlaying = false;
@@ -47,13 +50,14 @@ void AnimationSequence::update(sf::Time delta)
 {
     if (isPlaying)
     {
-        if (playClock->getElapsedTime().asSeconds() >= seqContainer[currentIndex]->GetTime())
+        *nowPlayingTime = playClock->getElapsedTime();
+        if (nowPlayingTime->asSeconds() >= seqContainer[currentIndex]->GetTime())
         {
             nextClip();
-            delete playClock;
             if (isPlaying)
             {
-                playClock = new sf::Clock();
+                //It means the is start from the beginning, becasue the animation sequence is looping.
+                playClock->restart();
             }
         }
     }
@@ -70,8 +74,8 @@ void AnimationSequence::play(bool loop, bool fromStart)
 {
     if (fromStart)
     {
-        delete nowPlayingTime;
-        nowPlayingTime = new sf::Time(sf::seconds(0));
+        *nowPlayingTime = sf::seconds(0);
+        currentIndex = 0;
     }
     
     isLooping = loop;
@@ -83,6 +87,8 @@ void AnimationSequence::play(bool loop, bool fromStart)
 
 void AnimationSequence::stop()
 {
+    isPlaying = false;
+    delete playClock;
     
 }
 

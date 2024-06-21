@@ -16,7 +16,7 @@ AnimationActor::AnimationActor(sf::Vector2f position) : Actor(position)
 
 AnimationActor::~AnimationActor()
 {
-    
+    delete m_animation;
 }
 
 void AnimationActor::update(const sf::Time& deltaTime)
@@ -34,6 +34,11 @@ void AnimationActor::update(const sf::Time& deltaTime)
 
 void AnimationActor::render(sf::RenderWindow& window)
 {
+    if (m_animation == nullptr)
+    {
+        return;
+    }
+    
     m_animation->render(window);
 }
 
@@ -62,6 +67,16 @@ void AnimationActor::playAnimation(bool loop)
 void AnimationActor::stopAnimation()
 {
     
+}
+
+void AnimationActor::setPosition(const sf::Vector2f& position)
+{
+    Actor::setPosition(position);
+}
+
+const sf::Vector2f& AnimationActor::getPosition() const
+{
+    return Actor::getPosition();
 }
 
 AnimationSequence* AnimationActor::createAnimationSequence()

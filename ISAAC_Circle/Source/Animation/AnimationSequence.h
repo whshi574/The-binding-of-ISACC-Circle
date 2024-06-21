@@ -44,7 +44,9 @@ public:
     void stop();
 
 private:
+    //This time is used to keep track of the time elapsed in one animation clip, not the hole sequence time tracker.
     sf::Time* nowPlayingTime;
+    //This clock is used to keep track of the time elapsed in one animation clip, not the hole sequence time tracker.
     sf::Clock* playClock;
 
 };
