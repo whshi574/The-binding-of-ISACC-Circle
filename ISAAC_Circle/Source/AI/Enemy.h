@@ -32,8 +32,10 @@ public:
         * Do attack action,yuancheng or jinzhan, so it needs to set to pure virtual 
      */
     virtual void Attack()=0;
+
+    void reset();
     
-    void cause_damage_to_hero();
+    void cause_damage_to_hero() const;
 
     void cause_damage_to_self(float damage);
 
@@ -41,6 +43,8 @@ public:
 
     void set_attack_distance(float distance);
     float get_attack_distance() const;
+    float calculate_move_direction();
+    
     //Actor override
     void update(const sf::Time& delta) override;
     void render(sf::RenderWindow& window) override;

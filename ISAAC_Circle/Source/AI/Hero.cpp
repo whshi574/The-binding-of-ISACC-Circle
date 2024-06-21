@@ -1,8 +1,26 @@
 #include "Hero.h"
 #include "Observer.h"
 
-hero_base::hero_base(const sf::Vector2f& position):Actor(position)
+hero_base::hero_base(const sf::Vector2f& position):Actor(position), health(100), max_health(100)
 {
+}
+
+void hero_base::cause_damage_to_self(float damage)
+{
+    health -= damage;
+    if (health < 0)
+    {
+        health = 0;
+    }
+}
+
+void hero_base::heal_self(float amount)
+{
+    health += amount;
+    if (health > max_health)
+    {
+        health = max_health;
+    }
 }
 
 void hero_base::register_observer(Observer_Base* observer)

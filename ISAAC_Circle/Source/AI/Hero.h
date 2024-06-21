@@ -9,6 +9,9 @@ public:
     explicit hero_base(const sf::Vector2f& position);
     ~hero_base() override=default;
 
+    void cause_damage_to_self(float damage);
+    void heal_self(float amount);
+
     //register observer
     void register_observer(class Observer_Base* observer);
 
@@ -23,4 +26,7 @@ public:
 private:
     //store observers, only use in Hero class,so don't need to use shared_ptr
     std::vector<class Observer_Base*> observers;
+
+    float health;
+    float max_health;
 };
