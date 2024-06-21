@@ -217,6 +217,7 @@
       <AdditionalBMIDirectories>E:\DeveloperKits_And_IDE\SFML\Project\ISAAC_Circle\\SFML-2.6.1\include</AdditionalBMIDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Source\AI\EnemyPool.cpp" />
     <ClCompile Include="Source\AI\Factory.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -518,11 +519,13 @@
       <AdditionalBMIDirectories>E:\DeveloperKits_And_IDE\SFML\Project\ISAAC_Circle\\SFML-2.6.1\include</AdditionalBMIDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Source\Core\Gamemanager.cpp" />
     <ClCompile Include="Source\Tools\SFMLTool.cpp" />
     <ClCompile Include="Source\Tools\TextureParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AI\Enemy.h" />
+    <ClInclude Include="Source\AI\EnemyPool.h" />
     <ClInclude Include="Source\AI\Factory.h" />
     <ClInclude Include="Source\AI\Hero.h" />
     <ClInclude Include="Source\AI\Observer.h" />
@@ -532,6 +535,7 @@
     <ClInclude Include="Source\Animation\SpriteAnimationClip.h" />
     <ClInclude Include="Source\Core\Actor.h" />
     <ClInclude Include="Source\Core\Game.h" />
+    <ClInclude Include="Source\Core\Gamemanager.h" />
     <ClInclude Include="Source\ThirdParty\nlohmann\json.hpp" />
     <ClInclude Include="Source\ThirdParty\nlohmann\json_fwd.hpp" />
     <ClInclude Include="Source\Tools\GameLog.h" />

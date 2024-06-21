@@ -30,9 +30,17 @@ void enemy_base::move()
     setPosition(temp_vec2);
 }
 
-void enemy_base::cause_damage_to_hero()
+void enemy_base::reset()
 {
-    
+    m_position=sf::Vector2f(0,0);
+    move_direction_=sf::Vector2f(0,0);
+    attack_target_=nullptr;
+    health_=100;
+}
+
+void enemy_base::cause_damage_to_hero() const
+{
+    attack_target_->cause_damage_to_self(attack_damage_);
 }
 
 void enemy_base::cause_damage_to_self(float damage)
@@ -54,6 +62,12 @@ void enemy_base::set_attack_distance(float distance)
 float enemy_base::get_attack_distance() const
 {
     return attack_distance_;
+}
+
+float enemy_base::calculate_move_direction()
+{
+    const float angle = std::atan2(attack_target_->getPosition().y-m_position.y, attack_target_->getPosition().x-m_position.x);
+    return angle;
 }
 
 void enemy_base::update(const sf::Time& delta)
@@ -82,6 +96,8 @@ enemy1::enemy1(std::shared_ptr<hero_base> attack_target, const sf::Vector2f& pos
 
 void enemy1::Attack()
 {
+    //do some actions here
+    cause_damage_to_hero();
 }
 
 void enemy_base::set_move_direction(const sf::Vector2f& vec2)
