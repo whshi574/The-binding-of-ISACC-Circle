@@ -1,0 +1,116 @@
+{
+    "info": [
+        {
+            "Name": "character_001_isaac_0_head",
+            "X": 0.0,
+            "Y": 291.0,
+            "Width": 31.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_1_head",
+            "X": 33.0,
+            "Y": 291.0,
+            "Width": 31.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_2_head",
+            "X": 65.0,
+            "Y": 291.0,
+            "Width": 31.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_3_head",
+            "X": 97.0,
+            "Y": 291.0,
+            "Width": 31.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_4_head",
+            "X": 129.0,
+            "Y": 291.0,
+            "Width": 31.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_5_head",
+            "X": 161.0,
+            "Y": 291.0,
+            "Width": 31.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_0_Body",
+            "X": 192.0,
+            "Y": 291.0,
+            "Width": 31.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_1",
+            "X": 225.0,
+            "Y": 291.0,
+            "Width": 31.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_0",
+            "X": 1.0,
+            "Y": 260.0,
+            "Width": 30.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_2",
+            "X": 33.0,
+            "Y": 260.0,
+            "Width": 30.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_3",
+            "X": 65.0,
+            "Y": 260.0,
+            "Width": 30.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_4",
+            "X": 97.0,
+            "Y": 260.0,
+            "Width": 30.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_5",
+            "X": 129.0,
+            "Y": 260.0,
+            "Width": 30.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_6",
+            "X": 161.0,
+            "Y": 260.0,
+            "Width": 30.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_7",
+            "X": 193.0,
+            "Y": 260.0,
+            "Width": 30.0,
+            "Height": 29.0
+        },
+        {
+            "Name": "character_001_isaac_8",
+            "X": 225.0,
+            "Y": 260.0,
+            "Width": 30.0,
+            "Height": 29.0
+        }
+    ]
+}

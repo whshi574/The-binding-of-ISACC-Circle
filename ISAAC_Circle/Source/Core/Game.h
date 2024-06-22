@@ -52,9 +52,7 @@ public:
 
 //------Debug------//
 public:
-    AnimationActor* m_animationActor;
-
-    bool isSHIWEIHAO_TestWorld;    
+    bool isSHIWEIHAO_TestWorld = true;
     World* SHIWEIHAO_TestWorld;
     World* LUOJIAWEN_TestWorld;
 };

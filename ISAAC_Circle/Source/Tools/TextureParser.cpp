@@ -5,10 +5,10 @@
 #include "SFML/Graphics.hpp"
 
 
-TextureParser::TextureParser(std::string jsonFilePath, sf::Sprite& sprite)
+TextureParser::TextureParser(std::string jsonFilePath, const sf::Texture& source)
 {
     readJsonFile(jsonFilePath);
-    ModifyJsonData(sprite);
+    ModifyJsonData(source);
 }
 
 TextureParser::~TextureParser()
@@ -16,10 +16,10 @@ TextureParser::~TextureParser()
     delete m_jsonData;
 }
 
-void TextureParser::ModifyJsonData(sf::Sprite& sprite)
+void TextureParser::ModifyJsonData( const sf::Texture& source)
 {
-    unsigned int spr_x = sprite.getTexture()->getSize().x;
-    unsigned int spr_y = sprite.getTexture()->getSize().y;
+    unsigned int spr_x = source.getSize().x;
+    unsigned int spr_y = source.getSize().y;
     
     for (auto& item : (*m_jsonData)["info"])
     {

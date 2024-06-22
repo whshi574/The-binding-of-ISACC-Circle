@@ -7,6 +7,8 @@
 #include "Tools\GameLog.h"
 #include "Tools\TextureParser.h"
 #include "Core\World.h"
+#include "Test/LUOJIAWEN_Test.h"
+#include "Test/SHIWEIHAO_Test.h"
 
 Game::Game():
 m_windowTitle("Default Game"),
@@ -74,47 +76,6 @@ void Game::runLoop()
     }
     
     LOG_GAME(spdlog::level::info, "Game loop started");
-
-    //----------------DEBUG CODE----------------
-    
-    m_animationActor = new AnimationActor(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
-    AnimationSequence* sequence = m_animationActor->createAnimationSequence();
-    
-    sf::Sprite sprite_bg;
-    sf::Texture texture_bg;
-    loadAndSetSprite(sprite_bg, texture_bg, "Resource/images/cutscenes/intro_bg.png");
-    sprite_bg.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
-    sprite_bg.setScale(sf::Vector2f(3.f, 3.f));
-    AlignedCenterSprite(sprite_bg);
-        
-    sf::Sprite sprite;
-    sf::Texture texture;
-    sf::Sprite sprite1;
-    
-    loadAndSetSprite(sprite, texture, "Resource/images/cutscenes/intro2.png");
-    
-    TextureParser textureParser("Resource/images/cutscenes/intro2.json", sprite);
-
-    std::vector<std::string> subTextureNames;
-    textureParser.PrintAllNamesToConsole();
-    
-    sprite.setTextureRect(textureParser.GetDataByName("intro2_0"));
-    AlignedCenterSprite(sprite);
-    sprite.setScale(sf::Vector2f(2.f, 2.f));
-    sprite.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
-    
-    //loadAndSetSprite(sprite1, texture, "Resource/images/cutscenes/intro1.png");
-    sprite1.setTexture(texture);
-    sprite1.setTextureRect(textureParser.GetDataByName("intro2_1"));
-    AlignedCenterSprite(sprite1);
-    sprite1.setScale(sf::Vector2f(2.f, 2.f));
-    sprite1.setPosition(sf::Vector2f(m_windowWidth / 2, m_windowHeight / 2));
-    
-    sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite, 0.1f));
-    sequence->addClip(std::make_unique<SpriteAnimationClip>(&sprite1, 0.1f));
-    m_animationActor->playAnimation(true);
-    
-    //---------------END DEBUG CODE-------------
     
     while (m_window->isOpen())
     {
@@ -122,8 +83,6 @@ void Game::runLoop()
 
         handleEventsTick(deltaTime);
         updateTick(deltaTime);
-        m_window->clear();
-        m_window->draw(sprite_bg);
         renderTick(deltaTime);
     }
 
@@ -134,32 +93,29 @@ void Game::init()
 {
     //---------------DEBUG CODE----------------
     //LUO JIA WEN change bool to use different world
-    isSHIWEIHAO_TestWorld = true;
-    SHIWEIHAO_TestWorld = new World();
-    LUOJIAWEN_TestWorld = new World();
+    SHIWEIHAO_TestWorld = new SHIWEIHAO_Test(this);
+    LUOJIAWEN_TestWorld = new LUOJIAWEN_Test(this);
     //---------------END DEBUG CODE------------
 }
 
 
 void Game::renderTick(sf::Time deltaTime)
 {
-    //m_window->clear();
-    //Debug code - need to remove
+    m_window->clear();
+    //---------------DEBUG CODE----------------
     if (isSHIWEIHAO_TestWorld)
     {
-        SHIWEIHAO_TestWorld->RenderTick(deltaTime);
+        SHIWEIHAO_TestWorld->RenderTick(*m_window);
     }else
     {
-        LUOJIAWEN_TestWorld->RenderTick(deltaTime);
+        LUOJIAWEN_TestWorld->RenderTick(*m_window);
     }
-
-    m_animationActor->render(*m_window);
+    //-------------END DEBUG CODE--------------
     m_window->display();
 }
 
 void Game::updateTick(sf::Time deltaTime)
 {
-    m_animationActor->update(deltaTime);
     if (isSHIWEIHAO_TestWorld)
     {
         SHIWEIHAO_TestWorld->UpdateTick(deltaTime);
@@ -188,10 +144,10 @@ void Game::handleEventsTick(sf::Time deltaTime)
 
     if (isSHIWEIHAO_TestWorld)
     {
-        SHIWEIHAO_TestWorld->HandleEventsTick(deltaTime);
+        SHIWEIHAO_TestWorld->HandleEventsTick(event);
     }else
     {
-        LUOJIAWEN_TestWorld->HandleEventsTick(deltaTime);
+        LUOJIAWEN_TestWorld->HandleEventsTick(event);
     }
 
 }

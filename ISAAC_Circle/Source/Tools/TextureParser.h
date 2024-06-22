@@ -7,13 +7,13 @@
 class TextureParser
 {
 public:
-    TextureParser(const std::string jsonFilePath, sf::Sprite& sprite);
+    TextureParser(const std::string jsonFilePath, const sf::Texture& source);
     ~TextureParser();
 private:
     nlohmann::json* m_jsonData;
 
     //Unity texture coordinate system is different from SFML's texture coordinate system.
-    void ModifyJsonData(sf::Sprite& sprite);
+    void ModifyJsonData(const sf::Texture& source);
 
 public:
     void readJsonFile(const std::string jsonFilePath);

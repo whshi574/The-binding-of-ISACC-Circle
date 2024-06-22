@@ -16,10 +16,10 @@ class AnimationSequence
 public:
     AnimationSequence();
     ~AnimationSequence();
-    void addClip(std::unique_ptr<AnimationClip> node);
+    void addClip(std::unique_ptr<AnimationClip> clip);
     void removeClip(size_t index);
     void removeAllClips();
-    void removeClip(std::unique_ptr<AnimationClip> node);
+    void removeClip(std::unique_ptr<AnimationClip> clip);
 
     template <typename T>
     T* getNode(size_t index) const;

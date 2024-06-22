@@ -6,12 +6,12 @@
 
 AnimationActor::AnimationActor(): Actor(sf::Vector2f(0.0f, 0.0f))
 {
-    m_clock.restart();
+
 }
 
 AnimationActor::AnimationActor(sf::Vector2f position) : Actor(position)
 {
-    m_clock.restart();
+
 }
 
 AnimationActor::~AnimationActor()
@@ -42,7 +42,7 @@ void AnimationActor::render(sf::RenderWindow& window)
     m_animation->render(window);
 }
 
-void AnimationActor::playAnimation(bool loop)
+void AnimationActor::playAnimation(bool loop, bool fromStart)
 {
     if (m_animation == nullptr)
     {
@@ -61,12 +61,25 @@ void AnimationActor::playAnimation(bool loop)
 
     m_isPlaying = true;
     m_isLoopPlay = loop;
-    m_animation->play(m_isLoopPlay, true);
+    m_animation->play(m_isLoopPlay, fromStart);
 }
 
 void AnimationActor::stopAnimation()
 {
-    
+    if (m_animation == nullptr)
+    {
+        SPDLOG_WARN("No animation set for this actor, stop animation failed");
+        LOG_GAME_ERROR("No animation set for this actor, stop animation failed");
+        return;
+    }
+
+    if (!m_isPlaying)
+    {
+        return;
+    }
+
+    m_isPlaying = false;
+    m_animation->stop();
 }
 
 void AnimationActor::setPosition(const sf::Vector2f& position)
@@ -84,7 +97,7 @@ AnimationSequence* AnimationActor::createAnimationSequence()
     if (m_animation)
     {
         SPDLOG_WARN("Animation already exists for this actor, you are trying to create a new one");
-        LOG_GAME_WARN("""Animation already exists for this actor, you are trying to create a new one");
+        LOG_GAME_WARN("Animation already exists for this actor, you are trying to create a new one");
 
         m_isPlaying = false;
         

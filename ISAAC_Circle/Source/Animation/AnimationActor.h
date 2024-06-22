@@ -23,13 +23,11 @@ private:
 
 public:
     AnimationSequence* createAnimationSequence();
-    void playAnimation(bool loop);
+    void playAnimation(bool loop, bool fromStart);
     void stopAnimation();
 
     void setPosition(const sf::Vector2f& position) override;
     const sf::Vector2f& getPosition() const override;
-
-private:
-    sf::Clock m_clock;
+    
 };
 
