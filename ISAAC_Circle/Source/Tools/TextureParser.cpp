@@ -74,7 +74,6 @@ sf::IntRect TextureParser::GetDataByName(const std::string name)
     {
         count++;
         if (item["Name"] == name) {
-            SPDLOG_INFO("Find texture data by name: {}", name);
             return sf::IntRect{item["X"], item["Y"], item["Width"], item["Height"]};
         }
     }

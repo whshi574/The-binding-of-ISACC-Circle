@@ -15,6 +15,7 @@ public:
     
     virtual void update(const sf::Time& deltaTime) override;
     virtual void render(sf::RenderWindow& window) override;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
     AnimationSequence* m_animation;
@@ -23,6 +24,7 @@ private:
 
 public:
     AnimationSequence* createAnimationSequence();
+    
     void playAnimation(bool loop, bool fromStart);
     void stopAnimation();
 

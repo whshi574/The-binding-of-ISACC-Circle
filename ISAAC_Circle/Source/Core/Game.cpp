@@ -9,6 +9,7 @@
 #include "Core\World.h"
 #include "Test/LUOJIAWEN_Test.h"
 #include "Test/SHIWEIHAO_Test.h"
+#include "UI/StartMenuWorld.h"
 
 Game::Game():
 m_windowTitle("Default Game"),
@@ -95,6 +96,7 @@ void Game::init()
     //LUO JIA WEN change bool to use different world
     SHIWEIHAO_TestWorld = new SHIWEIHAO_Test(this);
     LUOJIAWEN_TestWorld = new LUOJIAWEN_Test(this);
+    STARTWORLD = new StartMenuWorld(this);
     //---------------END DEBUG CODE------------
 }
 
@@ -105,7 +107,7 @@ void Game::renderTick(sf::Time deltaTime)
     //---------------DEBUG CODE----------------
     if (isSHIWEIHAO_TestWorld)
     {
-        SHIWEIHAO_TestWorld->RenderTick(*m_window);
+        STARTWORLD->RenderTick(*m_window);
     }else
     {
         LUOJIAWEN_TestWorld->RenderTick(*m_window);
@@ -118,7 +120,7 @@ void Game::updateTick(sf::Time deltaTime)
 {
     if (isSHIWEIHAO_TestWorld)
     {
-        SHIWEIHAO_TestWorld->UpdateTick(deltaTime);
+        STARTWORLD->UpdateTick(deltaTime);
     }else
     {
         LUOJIAWEN_TestWorld->UpdateTick(deltaTime);
@@ -144,7 +146,7 @@ void Game::handleEventsTick(sf::Time deltaTime)
 
     if (isSHIWEIHAO_TestWorld)
     {
-        SHIWEIHAO_TestWorld->HandleEventsTick(event);
+        STARTWORLD->HandleEventsTick(event);
     }else
     {
         LUOJIAWEN_TestWorld->HandleEventsTick(event);

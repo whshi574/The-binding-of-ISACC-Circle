@@ -1,9 +1,11 @@
 #pragma once
+#include <vector>
 
 class Game;
 
 namespace sf
 {
+    class Drawable;
     class Time;
     class RenderWindow;
     class Event;
@@ -24,4 +26,10 @@ public:
     Game* GetGame() const { return m_game; }
 private:
     Game* m_game;
+
+private:
+    std::vector<sf::Drawable*> m_drawables;
+
+public:
+    void AddObjectToRender(sf::Drawable* drawable);
 };

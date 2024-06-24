@@ -10,16 +10,12 @@ SpriteAnimationClip::SpriteAnimationClip(sf::Sprite* sprite, float time) : Anima
         return;
     }
 
-    //Create a new sprite and texture with the same texture as the original one
-    m_texture = new sf::Texture(*sprite->getTexture());
     m_nowSprite = new sf::Sprite(*sprite);
-    m_nowSprite->setTexture(*m_texture);
 }
 
 SpriteAnimationClip::~SpriteAnimationClip()
 {
     delete m_nowSprite;
-    delete m_texture;
 }
 
 sf::Sprite* SpriteAnimationClip::getSprite() const
@@ -35,6 +31,7 @@ void SpriteAnimationClip::render(sf::RenderWindow& window)
 {
     if (m_nowSprite == nullptr)
     {
+        SPDLOG_ERROR("Your SpriteAnimationClip is nullptr. Maybe you sprite in animation cilp is not constant variable. It be freed somewhere when animation is running.");
         return;
     }
     window.draw(*m_nowSprite);

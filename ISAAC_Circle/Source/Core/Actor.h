@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-class Actor
+class Actor : public sf::Drawable, public sf::Transformable
 {
 public:
     Actor(const sf::Vector2f& position) : m_position(position) {}

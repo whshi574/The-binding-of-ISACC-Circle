@@ -55,4 +55,5 @@ public:
     bool isSHIWEIHAO_TestWorld = true;
     World* SHIWEIHAO_TestWorld;
     World* LUOJIAWEN_TestWorld;
+    World* STARTWORLD;
 };

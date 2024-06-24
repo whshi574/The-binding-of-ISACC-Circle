@@ -90,6 +90,10 @@ void enemy_base::handleEvent(const sf::Event& event)
     Actor::handleEvent(event);
 }
 
+void enemy_base::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+}
+
 enemy1::enemy1(std::shared_ptr<hero_base> attack_target, const sf::Vector2f& position):enemy_base(std::move(attack_target), position)
 {
 }

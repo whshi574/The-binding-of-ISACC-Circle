@@ -49,6 +49,7 @@ public:
     void update(const sf::Time& delta) override;
     void render(sf::RenderWindow& window) override;
     void handleEvent(const sf::Event& event) override;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     
 private:
     //Control the Enemy Move Direction

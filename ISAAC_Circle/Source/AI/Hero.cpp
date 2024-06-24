@@ -48,3 +48,8 @@ void hero_base::handleEvent(const sf::Event& event)
 {
     Actor::handleEvent(event);
 }
+
+void hero_base::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    
+}

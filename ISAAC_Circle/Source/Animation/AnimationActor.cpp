@@ -42,6 +42,11 @@ void AnimationActor::render(sf::RenderWindow& window)
     m_animation->render(window);
 }
 
+void AnimationActor::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    
+}
+
 void AnimationActor::playAnimation(bool loop, bool fromStart)
 {
     if (m_animation == nullptr)

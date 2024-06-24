@@ -597,6 +597,8 @@
     </ClCompile>
     <ClCompile Include="Source\Tools\SFMLTool.cpp" />
     <ClCompile Include="Source\Tools\TextureParser.cpp" />
+    <ClCompile Include="Source\UI\Button.cpp" />
+    <ClCompile Include="Source\UI\StartMenuWorld.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AI\Enemy.h" />
@@ -619,6 +621,8 @@
     <ClInclude Include="Source\Tools\GameLog.h" />
     <ClInclude Include="Source\Tools\SFMLTool.h" />
     <ClInclude Include="Source\Tools\TextureParser.h" />
+    <ClInclude Include="Source\UI\Button.h" />
+    <ClInclude Include="Source\UI\StartMenuWorld.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,7 +8,6 @@ public:
     SpriteAnimationClip(sf::Sprite* sprite, float time);
     ~SpriteAnimationClip();
 private:
-    sf::Texture* m_texture;
     sf::Sprite* m_nowSprite;
 
 public:

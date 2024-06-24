@@ -1,0 +1,46 @@
+{
+    "info": [
+        {
+            "Name": "titlemenu_0",
+            "X": 0.0,
+            "Y": 269.0,
+            "Width": 480.0,
+            "Height": 271.0
+        },
+        {
+            "Name": "titlemenu_1",
+            "X": 0.0,
+            "Y": 164.0,
+            "Width": 480.0,
+            "Height": 104.0
+        },
+        {
+            "Name": "titlemenu_2",
+            "X": 10.0,
+            "Y": 2.0,
+            "Width": 154.0,
+            "Height": 163.0
+        },
+        {
+            "Name": "titlemenu_3",
+            "X": 169.0,
+            "Y": 2.0,
+            "Width": 154.0,
+            "Height": 163.0
+        },
+        {
+            "Name": "titlemenu_4",
+            "X": 339.0,
+            "Y": 86.0,
+            "Width": 90.0,
+            "Height": 74.0
+        },
+        {
+            "Name": "titlemenu_5",
+            "X": 339.0,
+            "Y": 9.0,
+            "Width": 90.0,
+            "Height": 74.0
+        }
+    ]
+}
