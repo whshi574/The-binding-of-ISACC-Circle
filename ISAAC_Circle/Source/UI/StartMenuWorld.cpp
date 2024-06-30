@@ -6,6 +6,7 @@
 #include "Animation//AnimationActor.h"
 #include "Animation/AnimationSequence.h"
 #include "Animation/SpriteAnimationClip.h"
+#include "Animation/SwingingSprite.h"
 
 StartMenuWorld::StartMenuWorld(Game* game) : World(game)
 {
@@ -29,6 +30,7 @@ void StartMenuWorld::UpdateTick(sf::Time deltaTime)
 {
     World::UpdateTick(deltaTime);
     startButtonActor->update(deltaTime);
+    spriteTitleSwing->UpdateTick(deltaTime);
 }
 
 void StartMenuWorld::RenderTick(sf::RenderWindow& window)
@@ -59,14 +61,15 @@ void StartMenuWorld::LoadAndSetTextures()
     AlignedCenterSprite(*spriteTitleBG);
     spriteTitleBG->setScale(3,3);
     spriteTitleBG->setPosition(GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2);
-    AddObjectToRender(spriteTitleBG);
+    AddObjectToRenderTick(spriteTitleBG);
 
     spriteTitle->setTexture(*textureTitleMenu);
     spriteTitle->setTextureRect(parser.GetDataByName("titlemenu_1"));
     spriteTitle->setScale(2,2);
     AlignedCenterSprite(*spriteTitle);
     spriteTitle->setPosition(GetGame()->GetWindowWidth()/2, spriteTitle->getGlobalBounds().height/2);
-    AddObjectToRender(spriteTitle);
+    spriteTitleSwing = new SwingingSprite(*spriteTitle, 1.5f, 0.3f);
+    AddObjectToRenderTick(spriteTitle);
 
     int buttonOffset = 70;
     

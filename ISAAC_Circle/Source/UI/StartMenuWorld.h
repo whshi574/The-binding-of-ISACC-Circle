@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/World.h"
 
+class SwingingSprite;
 class AnimationSequence;
 class AnimationActor;
 
@@ -28,6 +29,8 @@ private:
     
     sf::Sprite* spriteTitleBG;
     sf::Sprite* spriteTitle;
+    SwingingSprite* spriteTitleSwing;
+    
     sf::Sprite* spriteStartButton_0;
     sf::Sprite* spriteStartButton_1;
 
