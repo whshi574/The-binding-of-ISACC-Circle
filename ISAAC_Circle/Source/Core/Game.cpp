@@ -140,17 +140,27 @@ void Game::handleEventsTick(sf::Time deltaTime)
             m_window->close();
             break;
         default:
-            break;
+            {
+                if (isSHIWEIHAO_TestWorld)
+                {
+                    STARTWORLD->HandleEventsTick(event);
+                }else
+                {
+                    LUOJIAWEN_TestWorld->HandleEventsTick(event);
+                }
+                break;
+            }
+
         }
     }
 
-    if (isSHIWEIHAO_TestWorld)
-    {
-        STARTWORLD->HandleEventsTick(event);
-    }else
-    {
-        LUOJIAWEN_TestWorld->HandleEventsTick(event);
-    }
+    // if (isSHIWEIHAO_TestWorld)
+    // {
+    //     STARTWORLD->HandleEventsTick(event);
+    // }else
+    // {
+    //     LUOJIAWEN_TestWorld->HandleEventsTick(event);
+    // }
 
 }
 

@@ -13,5 +13,5 @@ public:
     void HandleEventsTick(const sf::Event& event) override;\
 private:
     std::unique_ptr<hero_base> hero;
-    
+    std::unique_ptr<class Gamemanager> gamemanager_;
 };

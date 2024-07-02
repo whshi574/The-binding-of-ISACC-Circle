@@ -37,8 +37,9 @@ private:
     std::vector<sf::Texture*>   textures_;
     std::vector<sf::Sprite*> run_sprites_;
     
-
+    sf::Vector2f velocity_;
     
+    float speed;
     
     float health;
     float max_health;
