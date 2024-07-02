@@ -5,8 +5,8 @@
 
 class SwingingSprite {
 public:
-    SwingingSprite(sf::Sprite& sprite, float elasticity, float damping)
-        : sprite(sprite), angle(0.0f), angularVelocity(1.0f), elasticity(elasticity), damping(damping) {}
+    SwingingSprite(sf::Sprite& sprite, float initAngle, float initAngularVelocity, float elasticity, float damping)
+        : sprite(sprite), angle(initAngle), angularVelocity(initAngularVelocity), elasticity(elasticity), damping(damping) {}
 
     void UpdateTick(sf::Time deltaTime);
 

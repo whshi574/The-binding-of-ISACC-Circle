@@ -7,6 +7,7 @@
 #include "Animation/AnimationSequence.h"
 #include "Animation/SpriteAnimationClip.h"
 #include "Animation/SwingingSprite.h"
+#include "Core/Component/SpriteContainer.h"
 
 StartMenuWorld::StartMenuWorld(Game* game) : World(game)
 {
@@ -59,16 +60,12 @@ void StartMenuWorld::LoadAndSetTextures()
 
     spriteTitleBG->setTextureRect(parser.GetDataByName("titlemenu_0"));
     AlignedCenterSprite(*spriteTitleBG);
-    spriteTitleBG->setScale(4.5,4.5);
-    spriteTitleBG->setPosition(GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2);
     AddObjectToRenderTick(spriteTitleBG);
 
     spriteTitle->setTexture(*textureTitleMenu);
     spriteTitle->setTextureRect(parser.GetDataByName("titlemenu_1"));
-    spriteTitle->setScale(2,2);
     AlignedCenterSprite(*spriteTitle);
-    spriteTitle->setPosition(GetGame()->GetWindowWidth()/2, spriteTitle->getGlobalBounds().height/2);
-    spriteTitleSwing = new SwingingSprite(*spriteTitle, 1.5f, 0.3f);
+    spriteTitleSwing = new SwingingSprite(*spriteTitle, 0.f, 0.1f,1.5f, 0.3f);
     AddObjectToRenderTick(spriteTitle);
 
     int buttonOffset = 70;
@@ -76,12 +73,23 @@ void StartMenuWorld::LoadAndSetTextures()
     spriteStartButton_0->setTexture(*textureTitleMenu);
     spriteStartButton_0->setTextureRect(parser.GetDataByName("titlemenu_2"));
     AlignedCenterSprite(*spriteStartButton_0);
-    spriteStartButton_0->setScale(2.5,2.5);
-    spriteStartButton_0->setPosition(GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2 + buttonOffset);
 
     spriteStartButton_1->setTexture(*textureTitleMenu);
     spriteStartButton_1->setTextureRect(parser.GetDataByName("titlemenu_3"));
     AlignedCenterSprite(*spriteStartButton_1);
-    spriteStartButton_1->setScale(2.5,2.5);
-    spriteStartButton_1->setPosition(GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2+ buttonOffset);
+
+    titleContainer = new SpriteContainer();
+
+    titleContainer->addSprite(*spriteTitleBG, sf::Vector2f(0,0), sf::Vector2f(1,1), 0.f);
+    titleContainer->addSprite(*spriteTitle, sf::Vector2f(0,0), sf::Vector2f(1,1), 0.f);
+    titleContainer->addSprite(*spriteStartButton_0, sf::Vector2f(0,0), sf::Vector2f(1,1), 0.f);
+    titleContainer->addSprite(*spriteStartButton_1, sf::Vector2f(0,0), sf::Vector2f(1,1), 0.f);
+
+    titleContainer->setPosition(sf::Vector2f(GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2));
+    titleContainer->setScale(4.f,4.f);
+
+    float titleY = (GetGame()->GetWindowHeight()/2 - 150);
+    titleY *= -1.f;
+    titleContainer->setRelativePosition(*spriteTitle, sf::Vector2f(0, titleY));
+    titleContainer->setRelativeScale(*spriteTitle, sf::Vector2f(0.8f, 0.8f));
 }

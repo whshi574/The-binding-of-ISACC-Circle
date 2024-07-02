@@ -1,9 +1,11 @@
 #pragma once
 #include "Core/World.h"
 
+
 class SwingingSprite;
 class AnimationSequence;
 class AnimationActor;
+class SpriteContainer;
 
 namespace sf
 {
@@ -35,4 +37,6 @@ private:
     sf::Sprite* spriteStartButton_1;
 
     AnimationActor* startButtonActor;
+
+    SpriteContainer* titleContainer;
 };

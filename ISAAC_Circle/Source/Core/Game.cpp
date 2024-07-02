@@ -1,7 +1,5 @@
 #include "Game.h"
 #include "spdlog/spdlog.h"
-#include "Animation\AnimationActor.h"
-#include "Animation\AnimationSequence.h"
 #include "Animation\SpriteAnimationClip.h"
 #include "Tools\SFMLTool.h"
 #include "Tools\GameLog.h"
@@ -97,6 +95,8 @@ void Game::init()
     SHIWEIHAO_TestWorld = new SHIWEIHAO_Test(this);
     LUOJIAWEN_TestWorld = new LUOJIAWEN_Test(this);
     STARTWORLD = new StartMenuWorld(this);
+
+    SetWindowMode(sf::VideoMode(m_windowWidth, m_windowHeight), false);
     //---------------END DEBUG CODE------------
 }
 
