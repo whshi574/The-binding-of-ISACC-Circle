@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "..\Core\Object.h"
+#include "Animation/AnimationActor.h"
 
 class hero_base: public Object
 {
@@ -23,11 +24,22 @@ public:
     void render(sf::RenderWindow& window) override;
     void handleEvent(const sf::Event& event) override;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    
+
+    virtual void init();
+
+    virtual void LoadAndSetTextures();
 private:
     //store observers, only use in Hero class,so don't need to use shared_ptr
     std::vector<class Observer_Base*> observers;
 
+    std::unique_ptr<AnimationActor> animation_actor_;
+
+    std::vector<sf::Texture*>   textures_;
+    std::vector<sf::Sprite*> run_sprites_;
+    
+
+    
+    
     float health;
     float max_health;
 };

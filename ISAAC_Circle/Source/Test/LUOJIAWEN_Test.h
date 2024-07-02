@@ -1,4 +1,5 @@
 #pragma once
+#include "AI/Hero.h"
 #include "Core/World.h"
 
 class LUOJIAWEN_Test : public World
@@ -9,5 +10,8 @@ public:
 public:
     void UpdateTick(sf::Time deltaTime) override;
     void RenderTick(sf::RenderWindow& window) override;
-    void HandleEventsTick(const sf::Event& event) override;
+    void HandleEventsTick(const sf::Event& event) override;\
+private:
+    std::unique_ptr<hero_base> hero;
+    
 };

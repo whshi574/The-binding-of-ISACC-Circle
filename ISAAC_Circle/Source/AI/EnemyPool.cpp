@@ -22,7 +22,7 @@ std::unique_ptr<enemy_base> EnemyPool::acquire_enemy()
         if(m_current_index_ < m_size_)
         {
             m_current_index_++;
-            return enemy_factory_->create_object(1);
+            return enemy_factory_->create_object(1,sf::Vector2f(0,0));
         }
         return nullptr;
     }

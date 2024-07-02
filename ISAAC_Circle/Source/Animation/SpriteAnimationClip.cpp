@@ -10,7 +10,7 @@ SpriteAnimationClip::SpriteAnimationClip(sf::Sprite* sprite, float time) : Anima
         return;
     }
 
-    m_nowSprite = new sf::Sprite(*sprite);
+    m_nowSprite = sprite;
 }
 
 SpriteAnimationClip::~SpriteAnimationClip()

@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <SFML/System/Vector2.hpp>
 
 class hero_base;
 class enemy_base;
@@ -18,7 +19,7 @@ public:
      * 
      * now it needs positionx and positiony to create the object
      */
-    virtual T create_object(int type)=0;
+    virtual T create_object(int type,sf::Vector2f position)=0;
 };
 
 
@@ -27,7 +28,7 @@ class factory_hero : public factory_base<std::unique_ptr<hero_base>>
 public:
     factory_hero();
     ~factory_hero() override;
-    std::unique_ptr<hero_base> create_object(int type) override;
+    std::unique_ptr<hero_base> create_object(int type,sf::Vector2f position) override;
 };
 
 
@@ -36,5 +37,5 @@ class factory_enemy : public factory_base<std::unique_ptr<enemy_base>>
 public:
     factory_enemy();
     ~factory_enemy() override;
-    std::unique_ptr<enemy_base> create_object(int type) override;
+    std::unique_ptr<enemy_base> create_object(int type,sf::Vector2f position) override;
 };
