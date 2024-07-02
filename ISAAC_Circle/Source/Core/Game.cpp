@@ -183,3 +183,14 @@ sf::Vector2u Game::GetWindowResolution() const
 {
     return m_windowResolution;
 }
+
+void Game::SetWindowMode(sf::VideoMode mode, bool isWindowed)
+{
+    if (!isWindowed)
+    {
+        m_window->create(mode, m_windowTitle, sf::Style::None);
+    }else
+    {
+        m_window->create(mode, m_windowTitle);
+    }
+}

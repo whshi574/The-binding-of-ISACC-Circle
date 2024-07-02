@@ -4,12 +4,12 @@
 #include "SpriteAnimationClip.h"
 #include "Tools/GameLog.h"
 
-AnimationActor::AnimationActor(): Actor(sf::Vector2f(0.0f, 0.0f))
+AnimationActor::AnimationActor(): Object(sf::Vector2f(0.0f, 0.0f))
 {
 
 }
 
-AnimationActor::AnimationActor(sf::Vector2f position) : Actor(position)
+AnimationActor::AnimationActor(sf::Vector2f position) : Object(position)
 {
 
 }
@@ -89,12 +89,12 @@ void AnimationActor::stopAnimation()
 
 void AnimationActor::setPosition(const sf::Vector2f& position)
 {
-    Actor::setPosition(position);
+    Object::setPosition(position);
 }
 
 const sf::Vector2f& AnimationActor::getPosition() const
 {
-    return Actor::getPosition();
+    return Object::getPosition();
 }
 
 AnimationSequence* AnimationActor::createAnimationSequence()

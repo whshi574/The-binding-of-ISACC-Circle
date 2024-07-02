@@ -2,7 +2,7 @@
 #include <vector>
 
 class Game;
-class Actor;
+class Object;
 
 namespace sf
 {
@@ -30,10 +30,10 @@ private:
 
 private:
     std::vector<sf::Drawable*> m_drawables;
-    std::vector<Actor*> m_actors;
+    std::vector<Object*> m_objects;
 
 public:
     void AddObjectToRenderTick(sf::Drawable* drawable);
 
-    void AddActorToWorld(Actor* actor);
+    void AddActorToWorld(Object* actor);
 };

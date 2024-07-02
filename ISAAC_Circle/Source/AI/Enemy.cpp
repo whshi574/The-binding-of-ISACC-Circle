@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include <cmath>
 #include "Hero.h"
-enemy_base::enemy_base(std::shared_ptr<hero_base> attack_target, const sf::Vector2f& position):Actor(position),move_direction_(sf::Vector2f(0, 0)),
+enemy_base::enemy_base(std::shared_ptr<hero_base> attack_target, const sf::Vector2f& position):Object(position),move_direction_(sf::Vector2f(0, 0)),
     attack_distance_(20), speed(0),
     attack_damage_(0), attack_target_(std::move(attack_target)), health_(100)
 {
@@ -87,7 +87,7 @@ void enemy_base::render(sf::RenderWindow& window)
 
 void enemy_base::handleEvent(const sf::Event& event)
 {
-    Actor::handleEvent(event);
+    Object::handleEvent(event);
 }
 
 void enemy_base::draw(sf::RenderTarget& target, sf::RenderStates states) const

@@ -1,7 +1,7 @@
 #include "Hero.h"
 #include "Observer.h"
 
-hero_base::hero_base(const sf::Vector2f& position):Actor(position), health(100), max_health(100)
+hero_base::hero_base(const sf::Vector2f& position):Object(position), health(100), max_health(100)
 {
 }
 
@@ -46,7 +46,7 @@ void hero_base::render(sf::RenderWindow& window)
 
 void hero_base::handleEvent(const sf::Event& event)
 {
-    Actor::handleEvent(event);
+    Object::handleEvent(event);
 }
 
 void hero_base::draw(sf::RenderTarget& target, sf::RenderStates states) const

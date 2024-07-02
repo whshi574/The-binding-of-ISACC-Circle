@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
 
-#include "Core/Actor.h"
+#include "..\Core\Object.h"
 #include "SFML/Graphics/Glsl.hpp"
 
 constexpr float PI = 3.14159265358979323846f;
 class hero_base;
-class enemy_base:public Actor
+class enemy_base:public Object
 {
 public:
     explicit enemy_base(std::shared_ptr<hero_base> attack_target,const sf::Vector2f& position);

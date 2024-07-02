@@ -372,7 +372,7 @@
     <ClCompile Include="Source\Animation\AnimationSequence.cpp" />
     <ClCompile Include="Source\Animation\SpriteAnimationClip.cpp" />
     <ClCompile Include="Source\Animation\SwingingSprite.cpp" />
-    <ClCompile Include="Source\Core\Actor.cpp">
+    <ClCompile Include="Source\Core\Object.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -612,7 +612,7 @@
     <ClInclude Include="Source\Animation\AnimationSequence.h" />
     <ClInclude Include="Source\Animation\SpriteAnimationClip.h" />
     <ClInclude Include="Source\Animation\SwingingSprite.h" />
-    <ClInclude Include="Source\Core\Actor.h" />
+    <ClInclude Include="Source\Core\Object.h" />
     <ClInclude Include="Source\Core\Game.h" />
     <ClInclude Include="Source\Core\Gamemanager.h" />
     <ClInclude Include="Source\Core\World.h" />

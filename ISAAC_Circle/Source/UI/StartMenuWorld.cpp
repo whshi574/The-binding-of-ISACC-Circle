@@ -59,7 +59,7 @@ void StartMenuWorld::LoadAndSetTextures()
 
     spriteTitleBG->setTextureRect(parser.GetDataByName("titlemenu_0"));
     AlignedCenterSprite(*spriteTitleBG);
-    spriteTitleBG->setScale(3,3);
+    spriteTitleBG->setScale(4.5,4.5);
     spriteTitleBG->setPosition(GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2);
     AddObjectToRenderTick(spriteTitleBG);
 

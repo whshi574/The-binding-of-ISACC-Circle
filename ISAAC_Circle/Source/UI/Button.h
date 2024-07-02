@@ -1,7 +1,7 @@
 #pragma once
-#include "Core/Actor.h"
+#include "..\Core\Object.h"
 
-class Button : public Actor
+class Button : public Object
 {
 public:
     Button();

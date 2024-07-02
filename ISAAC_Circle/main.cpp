@@ -12,7 +12,7 @@ int main()
     LOG_GAME(spdlog::level::info, "----------START----------");
     
     //Initialize the game
-    Game game("Isaac : Circle", 1280, 720, "Resource/images/ui/loadimages/loadimages-024.png");
+    Game game("Isaac : Circle", 1920, 1080, "Resource/images/ui/loadimages/loadimages-024.png");
     game.runLoop();
     
     //Game end message

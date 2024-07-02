@@ -1,12 +1,12 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-class Actor : public sf::Drawable, public sf::Transformable
+class Object : public sf::Drawable, public sf::Transformable
 {
 public:
-    Actor(const sf::Vector2f& position) : m_position(position) {}
+    Object(const sf::Vector2f& position) : m_position(position) {}
     
-    virtual ~Actor() {}
+    virtual ~Object() {}
     
     virtual void update(const sf::Time& delta) = 0;
     virtual void render(sf::RenderWindow& window) = 0;

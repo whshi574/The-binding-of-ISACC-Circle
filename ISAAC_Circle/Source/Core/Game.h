@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "SFML/Window/WindowStyle.hpp"
 #include <thread>
 
 class AnimationActor;
@@ -46,6 +47,9 @@ public:
     unsigned int GetWindowHeight() const;
     sf::Time GetDeltaTime() const;
     sf::Vector2u GetWindowResolution() const;
+
+public:
+    void SetWindowMode(sf::VideoMode mode, bool isWindowed);
 
 
 

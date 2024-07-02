@@ -1,12 +1,12 @@
 #pragma once
-#include "..\Core\Actor.h"
+#include "..\Core\Object.h"
 
 /*
  * This class is created to play begin animations for the game.
  */
 class AnimationSequence;
 
-class AnimationActor : public Actor
+class AnimationActor : public Object
 {
 public:
     AnimationActor();

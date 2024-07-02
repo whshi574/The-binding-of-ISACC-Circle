@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 
-#include "Core/Actor.h"
+#include "..\Core\Object.h"
 
-class hero_base: public Actor
+class hero_base: public Object
 {
 public:
     explicit hero_base(const sf::Vector2f& position);
