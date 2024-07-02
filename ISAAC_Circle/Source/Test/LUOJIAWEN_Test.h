@@ -10,8 +10,13 @@ public:
 public:
     void UpdateTick(sf::Time deltaTime) override;
     void RenderTick(sf::RenderWindow& window) override;
-    void HandleEventsTick(const sf::Event& event) override;\
+    void HandleEventsTick(const sf::Event& event) override;
+    void create_enemy();
 private:
-    std::unique_ptr<hero_base> hero;
+    std::shared_ptr<hero_base> hero;
     std::unique_ptr<class Gamemanager> gamemanager_;
+
+    sf::Clock clock;
+    sf::Time timeSinceLastCall_create_enemy;
+    sf::Time create_enemy_interval;
 };

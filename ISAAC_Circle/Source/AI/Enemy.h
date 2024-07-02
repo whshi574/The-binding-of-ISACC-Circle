@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "..\Core\Object.h"
+#include "Animation/AnimationActor.h"
 #include "SFML/Graphics/Glsl.hpp"
 
 constexpr float PI = 3.14159265358979323846f;
@@ -9,7 +10,7 @@ class hero_base;
 class enemy_base:public Object
 {
 public:
-    explicit enemy_base(std::shared_ptr<hero_base> attack_target,const sf::Vector2f& position);
+    explicit enemy_base(const sf::Vector2f& position);
     
     ~enemy_base() override =default;
     
@@ -45,6 +46,10 @@ public:
     float get_attack_distance() const;
     float calculate_move_direction();
     
+    virtual void init();
+
+    virtual void LoadAndSetTextures();
+    
     //Actor override
     void update(const sf::Time& delta) override;
     void render(sf::RenderWindow& window) override;
@@ -64,16 +69,17 @@ private:
     //self Damage
     float attack_damage_;
     
-    //attack target
-    std::shared_ptr<hero_base> attack_target_;
-    
     //health
     float health_;
+    
+    std::unique_ptr<AnimationActor> animation_actor_;
+    std::vector<sf::Texture*>   textures_;
+    std::vector<sf::Sprite*> run_sprites_;
 };
 class enemy1 : public enemy_base
 {
 public:
-    enemy1(std::shared_ptr<hero_base> attack_target,const sf::Vector2f& position);
+    enemy1(const sf::Vector2f& position);
     ~enemy1() override =default;
     void Attack() override;
 };

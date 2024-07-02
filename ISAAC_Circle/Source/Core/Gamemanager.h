@@ -2,7 +2,14 @@
 #include <vector>
 
 #include "AI/Factory.h"
-class EnemyPool;
+#include "AI/EnemyPool.h"
+namespace sf
+{
+    class Event;
+    class Time;
+    class RenderWindow;
+}
+
 class Gamemanager
 {
 public:
@@ -10,6 +17,9 @@ public:
     ~Gamemanager()=default;
     
     void CreateEnemy(int enemyType, float x, float y);
+    void update(sf::Time deltaTime);
+    void render(sf::RenderWindow& window);
+    void handle_event(const sf::Event& event);
 private:
     std::vector<std::unique_ptr<enemy_base>> enemies_;
     std::unique_ptr<EnemyPool> enemyPool_;

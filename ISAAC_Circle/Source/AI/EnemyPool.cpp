@@ -1,8 +1,11 @@
 
 #include "EnemyPool.h"
+
+#include <iostream>
+
 #include "Factory.h"
 #include "Enemy.h"
-EnemyPool::EnemyPool(size_t size): m_size_(size), m_current_index_(0), pool_(size),
+EnemyPool::EnemyPool(size_t size): m_size_(size), m_current_index_(0),
                                    hero_factory_(std::make_unique<factory_hero>()),
                                    enemy_factory_(std::make_unique<factory_enemy>())
 {
@@ -18,11 +21,14 @@ std::unique_ptr<enemy_base> EnemyPool::acquire_enemy()
 {
     if (pool_.empty())
     {
+        std::cout << "EnemyPool is empty, creating new enemy" << std::endl;
         // create new enemy
         if(m_current_index_ < m_size_)
         {
             m_current_index_++;
-            return enemy_factory_->create_object(1,sf::Vector2f(0,0));
+            std::unique_ptr<enemy_base> enemy = enemy_factory_->create_object(1,sf::Vector2f(0,0));
+            std::cout << "EnemyPool created new enemy" << std::endl;
+            return enemy;
         }
         return nullptr;
     }

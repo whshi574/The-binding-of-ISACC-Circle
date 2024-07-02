@@ -23,12 +23,12 @@ public:
 };
 
 
-class factory_hero : public factory_base<std::unique_ptr<hero_base>>
+class factory_hero : public factory_base<std::shared_ptr<hero_base>>
 {
 public:
     factory_hero();
     ~factory_hero() override;
-    std::unique_ptr<hero_base> create_object(int type,sf::Vector2f position) override;
+    std::shared_ptr<hero_base>create_object(int type,sf::Vector2f position) override;
 };
 
 
