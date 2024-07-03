@@ -12,7 +12,7 @@
 hero_base::hero_base(const sf::Vector2f& position):Object(position),
                                                    animation_actor_(std::make_unique<AnimationActor>()),
                                                    velocity_(0.0f, 0.0f),
-                                                   speed(10.f), health(100), max_health(100)
+                                                   speed(100.0f), health(100), max_health(100)
 
 {
     init();
@@ -49,8 +49,14 @@ void hero_base::notify_observers() const
     }
 }
 
+void hero_base::render(sf::RenderWindow& window)
+{
+    animation_actor_->render(window);
+}
+
 void hero_base::update(const sf::Time& delta)
 {
+    m_position += velocity_ * delta.asSeconds();
     for (const auto& sprite : run_sprites_)
     {
         sprite->setPosition(m_position);
@@ -58,37 +64,90 @@ void hero_base::update(const sf::Time& delta)
     animation_actor_->update(delta);
 }
 
-void hero_base::render(sf::RenderWindow& window)
-{
-    animation_actor_->render(window);
-}
-
 void hero_base::handleEvent(const sf::Event& event)
 {
-    Object::handleEvent(event);
-    
+    // Object::handleEvent(event);
+
+    // Track the state of the keys
+    static bool isLeftPressed = false;
+    static bool isRightPressed = false;
+    static bool isUpPressed = false;
+    static bool isDownPressed = false;
+
     if (event.type == sf::Event::KeyPressed)
     {
-        if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up)
+        if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
         {
-            m_position = m_position + sf::Vector2f(0, -speed);
+            isLeftPressed = true;
+            velocity_.x = -speed;
         }
-        if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down)
+        else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
         {
-            m_position = m_position + sf::Vector2f(0, speed);
+            isRightPressed = true;
+            velocity_.x = speed;
         }
-        if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left)
+        else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
         {
-            m_position = m_position + sf::Vector2f(-speed, 0);
+            isUpPressed = true;
+            velocity_.y = -speed;
         }
-        if (event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right)
+        else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
         {
-            m_position = m_position + sf::Vector2f(speed, 0);
+            isDownPressed = true;
+            velocity_.y = speed;
         }
     }
-    
-
-            
+    else if (event.type == sf::Event::KeyReleased)
+    {
+        if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
+        {
+            isLeftPressed = false;
+            if (isRightPressed)
+            {
+                velocity_.x = speed;
+            }
+            else
+            {
+                velocity_.x = 0.0f;
+            }
+        }
+        else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
+        {
+            isRightPressed = false;
+            if (isLeftPressed)
+            {
+                velocity_.x = -speed;
+            }
+            else
+            {
+                velocity_.x = 0.0f;
+            }
+        }
+        else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
+        {
+            isUpPressed = false;
+            if (isDownPressed)
+            {
+                velocity_.y = speed;
+            }
+            else
+            {
+                velocity_.y = 0.0f;
+            }
+        }
+        else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+        {
+            isDownPressed = false;
+            if (isUpPressed)
+            {
+                velocity_.y = -speed;
+            }
+            else
+            {
+                velocity_.y = 0.0f;
+            }
+        }
+    }
     animation_actor_->handleEvent(event);
 }
 
