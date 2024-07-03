@@ -83,6 +83,14 @@ void Game::runLoop()
         handleEventsTick(deltaTime);
         updateTick(deltaTime);
         renderTick(deltaTime);
+
+        m_frameCount++;
+        if (m_frameRateClock.getElapsedTime().asSeconds() >= 1.f)
+        {
+            m_frameRate = m_frameCount;
+            m_frameCount = 0;
+            m_frameRateClock.restart();
+        }
     }
 
     LOG_GAME(spdlog::level::info, "Game loop ended");
@@ -96,7 +104,7 @@ void Game::init()
     LUOJIAWEN_TestWorld = new LUOJIAWEN_Test(this);
     STARTWORLD = new StartMenuWorld(this);
 
-    SetWindowMode(sf::VideoMode(m_windowWidth, m_windowHeight), false);
+    //SetWindowMode(sf::VideoMode(m_windowWidth, m_windowHeight), false);
     //---------------END DEBUG CODE------------
 }
 
@@ -203,4 +211,9 @@ void Game::SetWindowMode(sf::VideoMode mode, bool isWindowed)
     {
         m_window->create(mode, m_windowTitle);
     }
+}
+
+unsigned Game::GetLastFrameRate() const
+{
+    return m_frameRate;
 }

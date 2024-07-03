@@ -1,6 +1,7 @@
 #include "Hero.h"
 
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "Observer.h"
 #include "Animation/AnimationSequence.h"
@@ -11,7 +12,7 @@
 hero_base::hero_base(const sf::Vector2f& position):Object(position),
                                                    animation_actor_(std::make_unique<AnimationActor>()),
                                                    velocity_(0.0f, 0.0f),
-                                                   speed(0.1f), health(100), max_health(100)
+                                                   speed(800.f), health(100), max_health(100)
 
 {
     init();
@@ -50,7 +51,7 @@ void hero_base::notify_observers() const
 
 void hero_base::update(const sf::Time& delta)
 {
-    m_position += velocity_;
+    m_position += velocity_ * delta.asSeconds();
     for (const auto& sprite : run_sprites_)
     {
         sprite->setPosition(m_position);
@@ -66,15 +67,20 @@ void hero_base::render(sf::RenderWindow& window)
 void hero_base::handleEvent(const sf::Event& event)
 {
     Object::handleEvent(event);
+    SPDLOG_INFO("Object handle event");
     switch (event.type)
     {
         case sf::Event::KeyPressed:
             {
                 if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
                 {
+                    SPDLOG_INFO("Left key pressed");
                     velocity_.x = -speed;
-                }else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
+                }
+                
+                if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
                 {
+                    SPDLOG_INFO("Right key pressed");
                     velocity_.x = speed;
                 }
                 
@@ -82,7 +88,8 @@ void hero_base::handleEvent(const sf::Event& event)
                 {
                    velocity_.y = -speed;
                 }
-                else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+
+                if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
                 {
                     velocity_.y = speed;
                 }
@@ -90,12 +97,21 @@ void hero_base::handleEvent(const sf::Event& event)
             }
         case sf::Event::KeyReleased:
             {
-                if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
+                if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
                 {
-                    velocity_.x = 0.0f;
-                }else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+                    velocity_.x += speed;
+                }else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
                 {
-                    velocity_.y = 0.0f;
+                    velocity_.x -= speed;
+                }
+                
+                if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
+                {
+                    velocity_.y = 0;
+                }
+                else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+                {
+                    velocity_.y = 0;
                 }
                 break;
             }

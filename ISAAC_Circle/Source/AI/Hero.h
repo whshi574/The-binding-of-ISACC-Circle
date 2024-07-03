@@ -18,7 +18,7 @@ public:
 
     //notify all observers
     void notify_observers() const;
-
+    
     //Actor override
     void update(const sf::Time& delta) override;
     void render(sf::RenderWindow& window) override;

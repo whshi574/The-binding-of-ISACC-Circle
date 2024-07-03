@@ -25,10 +25,6 @@ private:
     void renderTick(sf::Time deltaTime);
     void updateTick(sf::Time deltaTime);
     void handleEventsTick(sf::Time deltaTime);
-
-private:
-    std::thread updateThread;
-    std::thread eventsThread;
     
 private:
     sf::RenderWindow* m_window;
@@ -51,7 +47,13 @@ public:
 public:
     void SetWindowMode(sf::VideoMode mode, bool isWindowed);
 
-
+public:
+    unsigned int GetLastFrameRate() const;
+    
+private:
+    unsigned int m_frameRate;
+    unsigned int m_frameCount;
+    sf::Clock m_frameRateClock;
 
 
 //------Debug------//

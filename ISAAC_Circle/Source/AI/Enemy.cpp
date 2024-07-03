@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include <cmath>
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "Hero.h"
 #include "Animation/AnimationSequence.h"
@@ -13,7 +14,7 @@ enemy_base::enemy_base(const sf::Vector2f& position):Object(position),move_direc
                                                                                                attack_damage_(0), health_(100),
                                                                                                animation_actor_(std::make_unique<AnimationActor>())
 {
-    std::cout << "Enemy base created" << std::endl;
+    SPDLOG_INFO("Enemy base created");
     init();
 }
 
@@ -202,7 +203,7 @@ void enemy_base::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 enemy1::enemy1(const sf::Vector2f& position):enemy_base(position)
 {
-    std::cout<<"enemy1 created"<<std::endl;
+    SPDLOG_INFO("Enemy1 created");
 }
 
 void enemy1::Attack()

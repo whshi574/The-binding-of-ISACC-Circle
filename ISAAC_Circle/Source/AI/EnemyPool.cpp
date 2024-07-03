@@ -2,6 +2,7 @@
 #include "EnemyPool.h"
 
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "Factory.h"
 #include "Enemy.h"
@@ -21,13 +22,13 @@ std::unique_ptr<enemy_base> EnemyPool::acquire_enemy()
 {
     if (pool_.empty())
     {
-        std::cout << "EnemyPool is empty, creating new enemy" << std::endl;
+        SPDLOG_INFO("EnemyPool is empty, creating new enemy");
         // create new enemy
         if(m_current_index_ < m_size_)
         {
             m_current_index_++;
             std::unique_ptr<enemy_base> enemy = enemy_factory_->create_object(1,sf::Vector2f(0,0));
-            std::cout << "EnemyPool created new enemy" << std::endl;
+            SPDLOG_INFO("EnemyPool created new enemy");
             return enemy;
         }
         return nullptr;

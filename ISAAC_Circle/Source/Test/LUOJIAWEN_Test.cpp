@@ -1,6 +1,7 @@
 #include "LUOJIAWEN_Test.h"
 
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "AI/Factory.h"
 #include "SFML/System/Time.hpp"
@@ -44,7 +45,7 @@ void LUOJIAWEN_Test::create_enemy()
     sf::Time elapsed=clock.getElapsedTime();
     if(elapsed-timeSinceLastCall_create_enemy>create_enemy_interval)
     {
-        std::cout<<"LUOJIAWEN_Test::create_enemy"<<std::endl;
+        SPDLOG_INFO("LUOJIAWEN_Test::create_enemy");
         std::srand(std::time(0));
 
         // 生成随机的x和y坐标
