@@ -8,6 +8,7 @@ import package to unity 2021.3.27f1
 - 怎么用它？
 基本：
 - 创建一个Unity工程文件
+- 使用Package Manager 安装2D Sprite Package
 - 导入SpiltAltasToJson.unitypackage到工程文件内部
 - 拥有你的图集资源
 
