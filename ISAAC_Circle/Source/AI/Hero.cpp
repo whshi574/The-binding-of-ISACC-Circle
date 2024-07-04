@@ -62,10 +62,8 @@ void hero_base::update(const sf::Time& delta)
 
     Object::update(delta);
 
-    for (const auto& sprite : run_sprites_)
-    {
-        sprite->setPosition(m_position);
-    }
+    runSpriteContainer.setPosition(m_position);
+    
     animation_actor_->update(delta);
 }
 
@@ -166,14 +164,11 @@ void hero_base::init()
     LoadAndSetTextures();
 
     AnimationSequence* run_sequence = animation_actor_->createAnimationSequenceByName("Run");
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[0], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[1], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[2], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[3], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[4], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[5], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[6], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[7], 0.15f));
+
+    for (auto& run_sprite : runSpriteContainer.getAllSprites())
+    {
+        run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprite, 0.15f));
+    }
     
     animation_actor_->playAnimationByName("Run", true, true);
 }
@@ -239,14 +234,23 @@ void hero_base::LoadAndSetTextures()
     run8_sprite->setPosition(m_position.x, m_position.y);
     run8_sprite->setScale(sf::Vector2f(2, 2));
     AlignedCenterSprite(*run8_sprite);
+
+    runSpriteContainer.addSprite(*run1_sprite);
+    runSpriteContainer.addSprite(*run2_sprite);
+    runSpriteContainer.addSprite(*run3_sprite);
+    runSpriteContainer.addSprite(*run4_sprite);
+    runSpriteContainer.addSprite(*run5_sprite);
+    runSpriteContainer.addSprite(*run6_sprite);
+    runSpriteContainer.addSprite(*run7_sprite);
+    runSpriteContainer.addSprite(*run8_sprite);
     
-    run_sprites_.push_back(run1_sprite);
+/*  run_sprites_.push_back(run1_sprite);
     run_sprites_.push_back(run2_sprite);
     run_sprites_.push_back(run3_sprite);
     run_sprites_.push_back(run4_sprite);
     run_sprites_.push_back(run5_sprite);
     run_sprites_.push_back(run6_sprite);
     run_sprites_.push_back(run7_sprite);
-    run_sprites_.push_back(run8_sprite);
+    run_sprites_.push_back(run8_sprite);*/
     
 }

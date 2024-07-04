@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
-
 #include "..\Core\Object.h"
 #include "Animation/AnimationActor.h"
+#include "Core/Component/SpriteContainer.h"
 
 class hero_base: public Object
 {
@@ -36,6 +36,7 @@ private:
 
     std::vector<sf::Texture*>   textures_;
     std::vector<sf::Sprite*> run_sprites_;
+    SpriteContainer runSpriteContainer;
     
     sf::Vector2f velocity_;
     

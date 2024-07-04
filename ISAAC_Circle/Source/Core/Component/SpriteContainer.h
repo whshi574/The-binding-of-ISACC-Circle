@@ -14,12 +14,14 @@ public:
     ~SpriteContainer();
 
 public:
+    void addSprite(sf::Sprite& sprite);
     void addSprite(sf::Sprite& sprite, const sf::Vector2f relativePosition);
     void addSprite(sf::Sprite& sprite, const sf::Vector2f relativePosition, const sf::Vector2f relativeScale, float relativeAngle);
 
     void removeSprite(sf::Sprite& sprite);
 
     bool getSpriteIndex(const sf::Sprite& sprite, size_t& index) const;
+    std::vector<sf::Sprite*> getAllSprites();
 
 public:
     void setPosition(const sf::Vector2f position);

@@ -12,6 +12,11 @@ SpriteContainer::~SpriteContainer()
 {
 }
 
+void SpriteContainer::addSprite(sf::Sprite& sprite)
+{
+    addSprite(sprite, sf::Vector2f(0, 0), sf::Vector2f(1, 1), 0);
+}
+
 void SpriteContainer::addSprite(sf::Sprite& sprite, const sf::Vector2f relativePosition)
 {
     addSprite(sprite, relativePosition, sf::Vector2f(1, 1), 0);
@@ -47,6 +52,11 @@ bool SpriteContainer::getSpriteIndex(const sf::Sprite& sprite, size_t& index) co
     }
 
     return true;
+}
+
+std::vector<sf::Sprite*> SpriteContainer::getAllSprites()
+{
+    return sprites;
 }
 
 void SpriteContainer::setPosition(const sf::Vector2f position)
