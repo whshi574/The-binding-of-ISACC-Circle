@@ -8,6 +8,8 @@
 #include "Test/LUOJIAWEN_Test.h"
 #include "Test/SHIWEIHAO_Test.h"
 #include "UI/StartMenuWorld.h"
+#include <imgui-SFML.h> // SFML ImGui includes
+#include <imgui.h> // ImGui includes
 
 Game::Game():
 m_windowTitle("Default Game"),
@@ -66,6 +68,8 @@ Game::~Game()
 void Game::runLoop()
 {
     init();
+
+    ImGui::SFML::Init(*m_window);
     
     if (m_window == nullptr)
     {
@@ -81,7 +85,11 @@ void Game::runLoop()
         deltaTime = m_TickClock.restart();
 
         handleEventsTick(deltaTime);
+
+        ImGui::SFML::Update(*m_window, m_TickClock.restart());
         updateTick(deltaTime);
+        
+        ImGui::ShowDemoWindow();
         renderTick(deltaTime);
 
         m_frameCount++;
@@ -93,6 +101,7 @@ void Game::runLoop()
         }
     }
 
+    ImGui::SFML::Shutdown();
     LOG_GAME(spdlog::level::info, "Game loop ended");
 }
 
@@ -121,6 +130,7 @@ void Game::renderTick(sf::Time deltaTime)
         LUOJIAWEN_TestWorld->RenderTick(*m_window);
     }
     //-------------END DEBUG CODE--------------
+    ImGui::SFML::Render(*m_window);
     m_window->display();
 }
 
@@ -142,6 +152,7 @@ void Game::handleEventsTick(sf::Time deltaTime)
 
     while (m_window->pollEvent(event))
     {
+        ImGui::SFML::ProcessEvent(*m_window, event);
         switch (event.type)
         {
         case sf::Event::Closed:
