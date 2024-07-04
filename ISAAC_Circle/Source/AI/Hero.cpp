@@ -14,6 +14,7 @@ hero_base::hero_base(const sf::Vector2f& position):Object(position),
                                                    velocity_(0.0f, 0.0f),
                                                    speed(500.0f), health(100), max_health(100)
 
+
 {
     init();
 }
@@ -56,7 +57,11 @@ void hero_base::render(sf::RenderWindow& window)
 
 void hero_base::update(const sf::Time& delta)
 {
+
     m_position += velocity_ * delta.asSeconds();
+
+    Object::update(delta);
+
     for (const auto& sprite : run_sprites_)
     {
         sprite->setPosition(m_position);
@@ -244,4 +249,4 @@ void hero_base::LoadAndSetTextures()
     run_sprites_.push_back(run7_sprite);
     run_sprites_.push_back(run8_sprite);
     
-}   
+}

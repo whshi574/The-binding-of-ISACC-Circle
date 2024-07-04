@@ -6,8 +6,6 @@ class Object : public sf::Drawable, public sf::Transformable
 public:
     Object(const sf::Vector2f& position) : m_position(position) {}
     
-    virtual ~Object() {}
-    
     virtual void update(const sf::Time& delta);
     virtual void render(sf::RenderWindow& window) = 0;
     virtual void handleEvent(const sf::Event& event) {}

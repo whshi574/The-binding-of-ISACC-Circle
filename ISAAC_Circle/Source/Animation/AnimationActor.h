@@ -19,17 +19,19 @@ public:
 
 private:
     std::vector<AnimationSequence*> m_animations;
-    bool m_isPlaying = false;
-    bool m_isLoopPlay = true;
 
 public:
     AnimationSequence* createAnimationSequenceByName(std::string name);
+    void removeAnimationSequenceByName(std::string name);
 
     void playAnimationByName(std::string name, bool loop = true, bool fromStart = true);
     void playAnimationBySequence(AnimationSequence* sequence, bool loop = true, bool fromStart = true);
     
     void stopAnimationByName(std::string name);
     void stopAnimationBySequence(AnimationSequence* sequence);
+
+    void showAnimationByName(std::string name, bool isShow);
+    void showAnimationBySequence(AnimationSequence* sequence, bool isShow);
 
     AnimationSequence* getAnimationByName(std::string name);
 
@@ -39,4 +41,5 @@ public:
 private:
     void playAnimation_SRC(AnimationSequence* sequence, bool loop, bool fromStart);
     void stopAnimation_SRC(AnimationSequence* sequence);
+    void showAnimation_SRC(AnimationSequence* sequence, bool isShow);
 };

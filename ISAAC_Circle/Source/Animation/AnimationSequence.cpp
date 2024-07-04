@@ -64,8 +64,32 @@ bool AnimationSequence::isLoopingSequence() const
     return isLooping;
 }
 
+void AnimationSequence::setIsRendered(bool value)
+{
+    isRendered = value;
+}
+
+void AnimationSequence::setIsUpdated(bool value)
+{
+    isUpdated = value;
+}
+
+bool AnimationSequence::getIsRendered() const
+{
+    return isRendered;
+}
+
+bool AnimationSequence::getIsUpdated() const
+{
+    return isUpdated;
+}
+
 void AnimationSequence::update(sf::Time delta)
 {
+    if (!isUpdated)
+    {
+        return;
+    }
     
     if (isPlaying)
     {
@@ -97,6 +121,10 @@ void AnimationSequence::update(sf::Time delta)
 
 void AnimationSequence::render(sf::RenderWindow& window)
 {
+    if (!isRendered)
+    {
+        return;
+    }
     if (seqContainer.empty())
     {
         return;

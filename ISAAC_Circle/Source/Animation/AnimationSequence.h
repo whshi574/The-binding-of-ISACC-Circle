@@ -50,6 +50,17 @@ public:
     {
         return name;
     }
+
+private:
+    bool isRendered = true;
+    bool isUpdated = true;
+
+public:
+    void setIsRendered(bool value);
+    void setIsUpdated(bool value);
+
+    bool getIsRendered() const;
+    bool getIsUpdated() const;
     
 public:
     void update(sf::Time delta);

@@ -72,6 +72,23 @@ AnimationSequence* AnimationActor::createAnimationSequenceByName(std::string nam
     return newSequence;
 }
 
+void AnimationActor::removeAnimationSequenceByName(std::string name)
+{
+    AnimationSequence* removed = getAnimationByName(name);
+
+    if (removed == nullptr)
+    {
+        SPDLOG_WARN("Sequence not found in m_animations, please check your sequence when remove animation");
+        LOG_GAME_WARN("Sequence not found in m_animations, please check your sequence when remove animation");
+        return;
+    }
+
+    auto it = std::remove(m_animations.begin(), m_animations.end(), removed);
+    m_animations.erase(it, m_animations.end());
+
+    delete removed;
+}
+
 void AnimationActor::playAnimationByName(std::string name, bool loop, bool fromStart)
 {
     for (auto& sequence : m_animations)
@@ -131,6 +148,36 @@ void AnimationActor::stopAnimationBySequence(AnimationSequence* sequence)
 
 }
 
+void AnimationActor::showAnimationByName(std::string name, bool isShow)
+{
+    for (auto& sequence : m_animations)
+    {
+        if (sequence->getName() == name)
+        {
+            showAnimation_SRC(sequence, isShow);
+            return;
+        }
+    }
+
+    SPDLOG_ERROR("Sequence not found in m_animations, please check your sequence when stop animation");
+    LOG_GAME_ERROR("Sequence not found in m_animations, please check your sequence when stop animation");
+}
+
+void AnimationActor::showAnimationBySequence(AnimationSequence* sequence, bool isShow)
+{
+    for (auto& seq : m_animations)
+    {
+        if (sequence == seq)
+        {
+            stopAnimation_SRC(sequence);
+            return;
+        }
+    }
+
+    SPDLOG_ERROR("Sequence not found in m_animations, please check your sequence when stop animation");
+    LOG_GAME_ERROR("Sequence not found in m_animations, please check your sequence when stop animation");
+}
+
 AnimationSequence* AnimationActor::getAnimationByName(std::string name)
 {
     for (auto& sequence : m_animations)
@@ -152,20 +199,12 @@ void AnimationActor::playAnimation_SRC(AnimationSequence* sequence, bool loop, b
     {
         SPDLOG_WARN("No animation set for this actor, play animation failed");
         LOG_GAME_ERROR("No animation set for this actor, play animation failed");
+        auto it = std::remove(m_animations.begin(), m_animations.end(), sequence);
+        m_animations.erase(it, m_animations.end());
         return;
     }
     
-    if (m_isPlaying)
-    {
-        //Todo:Reset the animation to the beginning
-        LOG_GAME_INFO("You are trying to play a animation which is runing");
-        m_isLoopPlay = loop;
-        return;
-    }
-
-    m_isPlaying = true;
-    m_isLoopPlay = loop;
-    sequence->play(m_isLoopPlay, fromStart);
+    sequence->play(loop, fromStart);
 }
 
 void AnimationActor::stopAnimation_SRC(AnimationSequence* sequence)
@@ -174,10 +213,26 @@ void AnimationActor::stopAnimation_SRC(AnimationSequence* sequence)
     {
         SPDLOG_WARN("No animation set for this actor, stop animation failed");
         LOG_GAME_ERROR("No animation set for this actor, stop animation failed");
+        auto it = std::remove(m_animations.begin(), m_animations.end(), sequence);
+        m_animations.erase(it, m_animations.end());
         return;
     }
 
     sequence->stop();
+}
+
+void AnimationActor::showAnimation_SRC(AnimationSequence* sequence, bool isShow)
+{
+    if (sequence == nullptr)
+    {
+        SPDLOG_WARN("No animation set for this actor, stop animation failed");
+        LOG_GAME_ERROR("No animation set for this actor, stop animation failed");
+        auto it = std::remove(m_animations.begin(), m_animations.end(), sequence);
+        m_animations.erase(it, m_animations.end());
+        return;
+    }
+
+    sequence->setIsRendered(isShow);
 }
 
 void AnimationActor::setPosition(const sf::Vector2f& position)
