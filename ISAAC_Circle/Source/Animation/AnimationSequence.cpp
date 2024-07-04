@@ -11,6 +11,14 @@ AnimationSequence::AnimationSequence()
     nowPlayingTime = new sf::Time(sf::seconds(0));
 }
 
+AnimationSequence::AnimationSequence(std::string Name)
+{
+    LOG_GAME_INFO("One Animation sequence created.");
+
+    name = Name;
+    nowPlayingTime = new sf::Time(sf::seconds(0));
+}
+
 AnimationSequence::~AnimationSequence()
 {
     LOG_GAME_INFO("One Animation sequence destroyed.");
@@ -44,6 +52,16 @@ void AnimationSequence::nextClip()
         return;
     }
     currentIndex++;
+}
+
+bool AnimationSequence::isPlayingSequence() const
+{
+    return isPlaying;
+}
+
+bool AnimationSequence::isLoopingSequence() const
+{
+    return isLooping;
 }
 
 void AnimationSequence::update(sf::Time delta)

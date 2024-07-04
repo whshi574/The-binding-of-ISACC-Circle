@@ -10,7 +10,7 @@
 
 SHIWEIHAO_Test::SHIWEIHAO_Test(Game* game): World(game)
 {
-    AnimationSequence* pAnimationSequence = m_pAnimationActor.createAnimationSequence();
+    AnimationSequence* pAnimationSequence = m_pAnimationActor.createAnimationSequenceByName("Run");
 
     // Free memory where?
     sf::Texture pTexture;
@@ -81,7 +81,7 @@ SHIWEIHAO_Test::SHIWEIHAO_Test(Game* game): World(game)
     pSprite_8->setScale(2.0f, 2.0f);
     pAnimationSequence->addClip(std::make_unique<SpriteAnimationClip>(pSprite_8, 0.1f));
     
-    m_pAnimationActor.playAnimation(true, true);
+    m_pAnimationActor.playAnimationByName("Run", true, true);
 }
 
 SHIWEIHAO_Test::~SHIWEIHAO_Test()

@@ -14,11 +14,11 @@ StartMenuWorld::StartMenuWorld(Game* game) : World(game)
     LoadAndSetTextures();
     
     startButtonActor = new AnimationActor();
-    AnimationSequence* tempSequence = startButtonActor->createAnimationSequence();
+    AnimationSequence* tempSequence = startButtonActor->createAnimationSequenceByName("ShakeTitle");
     tempSequence->addClip(std::make_unique<SpriteAnimationClip>(spriteStartButton_0, 0.15f));
     tempSequence->addClip(std::make_unique<SpriteAnimationClip>(spriteStartButton_1, 0.15f));
 
-    startButtonActor->playAnimation(true,true);
+    startButtonActor->playAnimationByName("ShakeTitle",true,true);
 }
 
 

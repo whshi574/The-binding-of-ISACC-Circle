@@ -86,7 +86,7 @@ void enemy_base::init()
 {
     LoadAndSetTextures();
 
-    AnimationSequence* run_sequence = animation_actor_->createAnimationSequence();
+    AnimationSequence* run_sequence = animation_actor_->createAnimationSequenceByName("Run");
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[0], 0.15f));
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[1], 0.15f));
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[2], 0.15f));
@@ -96,7 +96,7 @@ void enemy_base::init()
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[6], 0.15f));
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[7], 0.15f));
     
-    animation_actor_->playAnimation(true, true);
+    animation_actor_->playAnimationByName("Run", true, true);
 }
 
 void enemy_base::LoadAndSetTextures()

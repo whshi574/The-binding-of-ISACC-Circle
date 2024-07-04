@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <string>
 
 namespace sf
 {
@@ -15,6 +16,9 @@ class AnimationSequence
 {
 public:
     AnimationSequence();
+
+    AnimationSequence(std::string Name);
+
     ~AnimationSequence();
     void addClip(std::unique_ptr<AnimationClip> clip);
     void removeClip(size_t index);
@@ -34,6 +38,18 @@ private:
     bool isLooping = false;
 
     void nextClip();
+public:
+    bool isPlayingSequence() const;
+    bool isLoopingSequence() const;
+    
+private:
+    std::string name = "Default Sequence";
+
+public:
+    std::string getName() const
+    {
+        return name;
+    }
     
 public:
     void update(sf::Time delta);

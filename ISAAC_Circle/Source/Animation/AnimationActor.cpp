@@ -3,6 +3,7 @@
 #include "AnimationSequence.h"
 #include "SpriteAnimationClip.h"
 #include "Tools/GameLog.h"
+#include <string>
 
 AnimationActor::AnimationActor(): Object(sf::Vector2f(0.0f, 0.0f))
 {
@@ -16,30 +17,47 @@ AnimationActor::AnimationActor(sf::Vector2f position) : Object(position)
 
 AnimationActor::~AnimationActor()
 {
-    delete m_animation;
+    for (auto& sequence : m_animations)
+    {
+        delete sequence;
+    }
 }
 
 void AnimationActor::update(const sf::Time& deltaTime)
 {
-    if (m_animation == nullptr)
+    for (auto& sequence : m_animations)
     {
-        return;
-    }
+        if (sequence == nullptr)
+        {
+            SPDLOG_ERROR("One sequence in m_animations is nullptr, please check your sequence lifecircle, the sequence will be removed automatically");
+            LOG_GAME_ERROR("One sequence in m_animations is nullptr, please check your sequence lifecircle, the sequence will be removed automatically");
+            auto it = std::remove(m_animations.begin(), m_animations.end(), sequence);
+            m_animations.erase(it, m_animations.end());
+            continue;
+        }
 
-    if (m_isPlaying)
-    {
-        m_animation->update(deltaTime);
+        if (sequence->isPlayingSequence())
+        {
+            sequence->update(deltaTime);
+        }
     }
 }
 
 void AnimationActor::render(sf::RenderWindow& window)
 {
-    if (m_animation == nullptr)
+    for (auto& sequence : m_animations)
     {
-        return;
+        if (sequence == nullptr)
+        {
+            SPDLOG_ERROR("One sequence in m_animations is nullptr, please check your sequence lifecircle, the sequence will be removed automatically");
+            LOG_GAME_ERROR("One sequence in m_animations is nullptr, please check your sequence lifecircle, the sequence will be removed automatically");
+            auto it = std::remove(m_animations.begin(), m_animations.end(), sequence);
+            m_animations.erase(it, m_animations.end());
+            continue;
+        }
+
+        sequence->render(window);
     }
-    
-    m_animation->render(window);
 }
 
 void AnimationActor::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -47,15 +65,96 @@ void AnimationActor::draw(sf::RenderTarget& target, sf::RenderStates states) con
     
 }
 
-void AnimationActor::playAnimation(bool loop, bool fromStart)
+AnimationSequence* AnimationActor::createAnimationSequenceByName(std::string name)
 {
-    if (m_animation == nullptr)
+    AnimationSequence* newSequence = new AnimationSequence(name);
+    m_animations.push_back(newSequence);
+    return newSequence;
+}
+
+void AnimationActor::playAnimationByName(std::string name, bool loop, bool fromStart)
+{
+    for (auto& sequence : m_animations)
+    {
+        if (sequence->getName() == name)
+        {
+            playAnimation_SRC(sequence, loop, fromStart);
+            return;
+        }
+    }
+    SPDLOG_ERROR("Sequence not found in m_animations, please check your sequence when play animation");
+    LOG_GAME_ERROR("Sequence not found in m_animations, please check your sequence when play animation");
+}
+
+void AnimationActor::playAnimationBySequence(AnimationSequence* sequence, bool loop, bool fromStart)
+{
+    for (auto& seq : m_animations)
+    {
+        if (seq == sequence)
+        {
+            playAnimation_SRC(seq, loop, fromStart);
+            return;
+        }
+    }
+    SPDLOG_ERROR("Sequence not found in m_animations, please check your sequence when play animation");
+    LOG_GAME_ERROR("Sequence not found in m_animations, please check your sequence when play animation");
+}
+
+void AnimationActor::stopAnimationByName(std::string name)
+{
+    for (auto& sequence : m_animations)
+    {
+        if (sequence->getName() == name)
+        {
+            stopAnimation_SRC(sequence);
+            return;
+        }
+    }
+
+    SPDLOG_ERROR("Sequence not found in m_animations, please check your sequence when stop animation");
+    LOG_GAME_ERROR("Sequence not found in m_animations, please check your sequence when stop animation");
+}
+
+void AnimationActor::stopAnimationBySequence(AnimationSequence* sequence)
+{
+    for (auto& seq : m_animations)
+    {
+        if (sequence == seq)
+        {
+            stopAnimation_SRC(sequence);
+            return;
+        }
+    }
+
+    SPDLOG_ERROR("Sequence not found in m_animations, please check your sequence when stop animation");
+    LOG_GAME_ERROR("Sequence not found in m_animations, please check your sequence when stop animation");
+
+}
+
+AnimationSequence* AnimationActor::getAnimationByName(std::string name)
+{
+    for (auto& sequence : m_animations)
+    {
+        if (sequence->getName() == name)
+        {
+            return sequence;
+        }
+    }
+
+    SPDLOG_ERROR("Sequence not found in m_animations, please check your sequence when find animation");
+    LOG_GAME_ERROR("Sequence not found in m_animations, please check your sequence when find animation");
+    return nullptr;
+}
+
+void AnimationActor::playAnimation_SRC(AnimationSequence* sequence, bool loop, bool fromStart)
+{
+    if (sequence == nullptr)
     {
         SPDLOG_WARN("No animation set for this actor, play animation failed");
         LOG_GAME_ERROR("No animation set for this actor, play animation failed");
         return;
     }
-
+    
     if (m_isPlaying)
     {
         //Todo:Reset the animation to the beginning
@@ -66,25 +165,19 @@ void AnimationActor::playAnimation(bool loop, bool fromStart)
 
     m_isPlaying = true;
     m_isLoopPlay = loop;
-    m_animation->play(m_isLoopPlay, fromStart);
+    sequence->play(m_isLoopPlay, fromStart);
 }
 
-void AnimationActor::stopAnimation()
+void AnimationActor::stopAnimation_SRC(AnimationSequence* sequence)
 {
-    if (m_animation == nullptr)
+    if (sequence == nullptr)
     {
         SPDLOG_WARN("No animation set for this actor, stop animation failed");
         LOG_GAME_ERROR("No animation set for this actor, stop animation failed");
         return;
     }
 
-    if (!m_isPlaying)
-    {
-        return;
-    }
-
-    m_isPlaying = false;
-    m_animation->stop();
+    sequence->stop();
 }
 
 void AnimationActor::setPosition(const sf::Vector2f& position)
@@ -95,22 +188,4 @@ void AnimationActor::setPosition(const sf::Vector2f& position)
 const sf::Vector2f& AnimationActor::getPosition() const
 {
     return Object::getPosition();
-}
-
-AnimationSequence* AnimationActor::createAnimationSequence()
-{
-    if (m_animation)
-    {
-        SPDLOG_WARN("Animation already exists for this actor, you are trying to create a new one");
-        LOG_GAME_WARN("Animation already exists for this actor, you are trying to create a new one");
-
-        m_isPlaying = false;
-        
-        //Maybe have some memory problem here?
-        delete m_animation;
-    }
-
-    m_animation = new AnimationSequence();
-    
-    return m_animation;
 }

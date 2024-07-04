@@ -12,7 +12,7 @@
 hero_base::hero_base(const sf::Vector2f& position):Object(position),
                                                    animation_actor_(std::make_unique<AnimationActor>()),
                                                    velocity_(0.0f, 0.0f),
-                                                   speed(100.0f), health(100), max_health(100)
+                                                   speed(500.0f), health(100), max_health(100)
 
 {
     init();
@@ -160,7 +160,7 @@ void hero_base::init()
 {
     LoadAndSetTextures();
 
-    AnimationSequence* run_sequence = animation_actor_->createAnimationSequence();
+    AnimationSequence* run_sequence = animation_actor_->createAnimationSequenceByName("Run");
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[0], 0.15f));
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[1], 0.15f));
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[2], 0.15f));
@@ -170,7 +170,7 @@ void hero_base::init()
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[6], 0.15f));
     run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[7], 0.15f));
     
-    animation_actor_->playAnimation(true, true);
+    animation_actor_->playAnimationByName("Run", true, true);
 }
 
 void hero_base::LoadAndSetTextures()
