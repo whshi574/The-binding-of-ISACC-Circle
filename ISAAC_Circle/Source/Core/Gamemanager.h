@@ -17,6 +17,7 @@ public:
     ~Gamemanager()=default;
     
     void CreateEnemy(int enemyType, float x, float y);
+    void remove_enemy(int enemyID);
     void update(sf::Time deltaTime);
     void render(sf::RenderWindow& window);
     void handle_event(const sf::Event& event);

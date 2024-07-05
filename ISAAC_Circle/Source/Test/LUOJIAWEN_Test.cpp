@@ -43,6 +43,7 @@ void LUOJIAWEN_Test::HandleEventsTick(const sf::Event& event)
 void LUOJIAWEN_Test::create_enemy()
 {
     sf::Time elapsed=clock.getElapsedTime();
+    //static bool get=false;
     if(elapsed-timeSinceLastCall_create_enemy>create_enemy_interval)
     {
         SPDLOG_INFO("LUOJIAWEN_Test::create_enemy");
@@ -54,6 +55,8 @@ void LUOJIAWEN_Test::create_enemy()
 
         // 使用生成的随机坐标创建敌人
         gamemanager_->CreateEnemy(1, randomX, randomY);
+
+        
         timeSinceLastCall_create_enemy=elapsed;
     }
 }

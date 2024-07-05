@@ -3,6 +3,7 @@
 
 #include "..\Core\Object.h"
 #include "Animation/AnimationActor.h"
+#include "Core/Component/SpriteContainer.h"
 #include "SFML/Graphics/Glsl.hpp"
 
 constexpr float PI = 3.14159265358979323846f;
@@ -10,7 +11,7 @@ class hero_base;
 class enemy_base:public Object
 {
 public:
-    explicit enemy_base(const sf::Vector2f& position);
+    explicit enemy_base(int enemy_type, const sf::Vector2f& position);
     
     ~enemy_base() override =default;
     
@@ -49,12 +50,15 @@ public:
     virtual void init();
 
     virtual void LoadAndSetTextures();
+
+    int get_enemy_type() const;
     
     //Actor override
     void update(const sf::Time& delta) override;
     void render(sf::RenderWindow& window) override;
     void handleEvent(const sf::Event& event) override;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     
 private:
     //Control the Enemy Move Direction
@@ -71,15 +75,17 @@ private:
     
     //health
     float health_;
+
+    int enemy_type_;
     
     std::unique_ptr<AnimationActor> animation_actor_;
     std::vector<sf::Texture*>   textures_;
-    std::vector<sf::Sprite*> run_sprites_;
+    std::unique_ptr<SpriteContainer> sprite_container_;
 };
 class enemy1 : public enemy_base
 {
 public:
-    enemy1(const sf::Vector2f& position);
+    enemy1(int enemy_type, const sf::Vector2f& position);
     ~enemy1() override =default;
     void Attack() override;
 };

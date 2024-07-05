@@ -22,7 +22,7 @@ factory_enemy::~factory_enemy()
 
 std::unique_ptr<enemy_base> factory_enemy::create_object(int type,sf::Vector2f position)
 {
-    return std::make_unique<enemy1>(position);
+    return std::make_unique<enemy1>(type,position);
 }
 
 

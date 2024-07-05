@@ -9,10 +9,12 @@
 #include "Tools/SFMLTool.h"
 #include "Tools/TextureParser.h"
 
-enemy_base::enemy_base(const sf::Vector2f& position):Object(position),move_direction_(sf::Vector2f(0, 0)),
+enemy_base::enemy_base(int enemy_type,const sf::Vector2f& position):Object(position),move_direction_(sf::Vector2f(0, 0)),
                                                                                                attack_distance_(20), speed(0),
                                                                                                attack_damage_(0), health_(100),
-                                                                                               animation_actor_(std::make_unique<AnimationActor>())
+                                                                                               animation_actor_(std::make_unique<AnimationActor>()),
+                                                                                               sprite_container_(std::make_unique<SpriteContainer>()),
+                                                                                               enemy_type_(enemy_type)
 {
     SPDLOG_INFO("Enemy base created");
     init();
@@ -87,14 +89,10 @@ void enemy_base::init()
     LoadAndSetTextures();
 
     AnimationSequence* run_sequence = animation_actor_->createAnimationSequenceByName("Run");
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[0], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[1], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[2], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[3], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[4], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[5], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[6], 0.15f));
-    run_sequence->addClip(std::make_unique<SpriteAnimationClip>(run_sprites_[7], 0.15f));
+    for (auto& sprite : sprite_container_->getAllSprites())
+    {
+        run_sequence->addClip(std::make_unique<SpriteAnimationClip>(sprite, 0.15f));
+    }
     
     animation_actor_->playAnimationByName("Run", true, true);
 }
@@ -160,23 +158,35 @@ void enemy_base::LoadAndSetTextures()
     run8_sprite->setPosition(m_position.x, m_position.y);
     run8_sprite->setScale(sf::Vector2f(2, 2));
     AlignedCenterSprite(*run8_sprite);
-    
-    run_sprites_.push_back(run1_sprite);
-    run_sprites_.push_back(run2_sprite);
-    run_sprites_.push_back(run3_sprite);
-    run_sprites_.push_back(run4_sprite);
-    run_sprites_.push_back(run5_sprite);
-    run_sprites_.push_back(run6_sprite);
-    run_sprites_.push_back(run7_sprite);
-    run_sprites_.push_back(run8_sprite);
+
+    sprite_container_->addSprite(*run1_sprite);
+    sprite_container_->addSprite(*run2_sprite);
+    sprite_container_->addSprite(*run3_sprite);
+    sprite_container_->addSprite(*run4_sprite);
+    sprite_container_->addSprite(*run5_sprite);
+    sprite_container_->addSprite(*run6_sprite);
+    sprite_container_->addSprite(*run7_sprite);
+    sprite_container_->addSprite(*run8_sprite);
+
+
+    // run_sprites_.push_back(run1_sprite);
+    // run_sprites_.push_back(run2_sprite);
+    // run_sprites_.push_back(run3_sprite);
+    // run_sprites_.push_back(run4_sprite);
+    // run_sprites_.push_back(run5_sprite);
+    // run_sprites_.push_back(run6_sprite);
+    // run_sprites_.push_back(run7_sprite);
+    // run_sprites_.push_back(run8_sprite);
+}
+
+int enemy_base::get_enemy_type() const
+{
+    return enemy_type_;
 }
 
 void enemy_base::update(const sf::Time& delta)
 {
-    for (const auto& sprite : run_sprites_)
-    {
-        sprite->setPosition(m_position);
-    }
+    sprite_container_->setPosition(m_position);
     animation_actor_->update(delta);
     if(calculate_distance()<attack_distance_)
     {
@@ -201,7 +211,7 @@ void enemy_base::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 }
 
-enemy1::enemy1(const sf::Vector2f& position):enemy_base(position)
+enemy1::enemy1(int enemy_type, const sf::Vector2f& position):enemy_base(enemy_type, position)
 {
     SPDLOG_INFO("Enemy1 created");
 }

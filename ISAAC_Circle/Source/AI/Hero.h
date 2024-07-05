@@ -35,7 +35,6 @@ private:
     std::unique_ptr<AnimationActor> animation_actor_;
 
     std::vector<sf::Texture*>   textures_;
-    std::vector<sf::Sprite*> run_sprites_;
     SpriteContainer runSpriteContainer;
     
     sf::Vector2f velocity_;

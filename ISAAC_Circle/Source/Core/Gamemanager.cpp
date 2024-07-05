@@ -1,6 +1,7 @@
 #include "Gamemanager.h"
 
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 Gamemanager::Gamemanager(): enemyPool_(std::make_unique<EnemyPool>(5))
 {
@@ -15,14 +16,21 @@ void Gamemanager::CreateEnemy(int enemyType, float x, float y)
     * 
     * now it needs positionx and positiony to create the object
     */
-    std::unique_ptr<enemy_base> tempEnemy = enemyPool_->acquire_enemy();
+    std::unique_ptr<enemy_base> tempEnemy = enemyPool_->acquire_enemy(enemyType);
     if(tempEnemy != nullptr)
     {
-        std::cout << "get enemy successfully " << std::endl;
+        SPDLOG_INFO("get enemy successfully");
         tempEnemy->setPosition(sf::Vector2f(x, y));
         enemies_.push_back(move(tempEnemy)); 
     }
 
+}
+
+void Gamemanager::remove_enemy(int enemyID)
+{
+    auto temp=move(enemies_.back());
+    enemies_.pop_back();
+    enemyPool_->release_enemy(enemyID,move(temp));
 }
 
 void Gamemanager::update(sf::Time deltaTime)
