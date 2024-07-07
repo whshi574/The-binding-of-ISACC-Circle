@@ -11,29 +11,29 @@ class hero_base;
 class enemy_base:public Object
 {
 public:
-    explicit enemy_base(int enemy_type, const sf::Vector2f& position);
+    explicit enemy_base(int enemy_type, const sf::Vector2f& position,std::shared_ptr<hero_base> hero_ptr);
     
     ~enemy_base() override =default;
     
     
     void set_move_speed(float move_speed);
     float get_move_speed() const;
-    sf::Vector2f get_move_direction() const;
-    void set_move_direction(const sf::Vector2f& vec2);
+    float get_move_direction() const;
+    void set_move_direction(float move_direction);
     
     /**
      * @brief enemy moveFunction
      * 
      * According to the move_direction to calculate the next position
      */
-    void move();
+    void move(const sf::Time& delta);
 
         /**
      * @brief enemy Attack Function
      * 
         * Do attack action,yuancheng or jinzhan, so it needs to set to pure virtual 
      */
-    virtual void Attack()=0;
+    virtual void Attack(const sf::Time& delta)=0;
 
     void reset();
     
@@ -45,7 +45,7 @@ public:
 
     void set_attack_distance(float distance);
     float get_attack_distance() const;
-    float calculate_move_direction();
+    float calculate_move_direction() const;
     
     virtual void init();
 
@@ -62,7 +62,7 @@ public:
     
 private:
     //Control the Enemy Move Direction
-    sf::Vector2f move_direction_;
+    float move_direction_;
 
     //Attack distance
     float attack_distance_;
@@ -77,6 +77,8 @@ private:
     float health_;
 
     int enemy_type_;
+
+    std::shared_ptr<hero_base> attack_target_;
     
     std::unique_ptr<AnimationActor> animation_actor_;
     std::vector<sf::Texture*>   textures_;
@@ -85,7 +87,7 @@ private:
 class enemy1 : public enemy_base
 {
 public:
-    enemy1(int enemy_type, const sf::Vector2f& position);
+    enemy1(int enemy_type, const sf::Vector2f& position,std::shared_ptr<hero_base> hero_ptr);
     ~enemy1() override =default;
-    void Attack() override;
+    void Attack(const sf::Time& delta) override;
 };

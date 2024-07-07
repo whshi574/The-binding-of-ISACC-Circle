@@ -16,7 +16,7 @@ public:
     Gamemanager();
     ~Gamemanager()=default;
     
-    void CreateEnemy(int enemyType, float x, float y);
+    void CreateEnemy(int enemyType, float x, float y,std::shared_ptr<hero_base> hero_);
     void remove_enemy(int enemyID);
     void update(sf::Time deltaTime);
     void render(sf::RenderWindow& window);

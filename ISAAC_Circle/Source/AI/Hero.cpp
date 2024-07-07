@@ -50,6 +50,11 @@ void hero_base::notify_observers() const
     }
 }
 
+float hero_base::get_health() const
+{
+    return health;
+}
+
 void hero_base::render(sf::RenderWindow& window)
 {
     animation_actor_->render(window);

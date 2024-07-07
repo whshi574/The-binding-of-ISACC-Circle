@@ -18,7 +18,7 @@ void EnemyPool::release_enemy(int type, std::unique_ptr<enemy_base> enemy)
     pools[type].push_back(std::move(enemy));
 }
 
-std::unique_ptr<enemy_base> EnemyPool::acquire_enemy(int type)
+std::unique_ptr<enemy_base> EnemyPool::acquire_enemy(int type,std::shared_ptr<hero_base> hero_ptr)
 {
     auto& pool = pools[type];
     if (!pool.empty()) {
@@ -30,7 +30,7 @@ std::unique_ptr<enemy_base> EnemyPool::acquire_enemy(int type)
     if(m_current_index_ < m_size_)
     {
         m_current_index_++;
-        std::unique_ptr<enemy_base> enemy = enemy_factory_->create_object(type,sf::Vector2f(0,0));
+        std::unique_ptr<enemy_base> enemy = enemy_factory_->create_object(type,sf::Vector2f(0,0),move(hero_ptr));
         SPDLOG_INFO("EnemyPool created new enemy");
         return enemy;
     }

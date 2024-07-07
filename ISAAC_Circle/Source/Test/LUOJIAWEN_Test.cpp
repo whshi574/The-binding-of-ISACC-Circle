@@ -11,7 +11,7 @@ LUOJIAWEN_Test::LUOJIAWEN_Test(Game* game): World(game),gamemanager_(std::make_u
 timeSinceLastCall_create_enemy(sf::Time::Zero),create_enemy_interval(sf::seconds(2.0f))
 {
     factory_hero* factory_hero_ =new factory_hero();
-    hero=factory_hero_->create_object(1,sf::Vector2f(GetGame()->GetWindowWidth()/2,GetGame()->GetWindowHeight()/2));
+    hero=factory_hero_->create_object(1,sf::Vector2f(GetGame()->GetWindowWidth()/2,GetGame()->GetWindowHeight()/2),nullptr);
     delete factory_hero_;
 }
 LUOJIAWEN_Test::~LUOJIAWEN_Test()
@@ -54,7 +54,7 @@ void LUOJIAWEN_Test::create_enemy()
         float randomY = static_cast<float>(std::rand() % 601); // 0到600之间的随机数
 
         // 使用生成的随机坐标创建敌人
-        gamemanager_->CreateEnemy(1, randomX, randomY);
+        gamemanager_->CreateEnemy(1, randomX, randomY,hero);
 
         
         timeSinceLastCall_create_enemy=elapsed;

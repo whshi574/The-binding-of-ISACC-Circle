@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include <cmath>
 #include <iostream>
+#include <utility>
 #include <spdlog/spdlog.h>
 
 #include "Hero.h"
@@ -9,12 +10,13 @@
 #include "Tools/SFMLTool.h"
 #include "Tools/TextureParser.h"
 
-enemy_base::enemy_base(int enemy_type,const sf::Vector2f& position):Object(position),move_direction_(sf::Vector2f(0, 0)),
-                                                                                               attack_distance_(20), speed(0),
-                                                                                               attack_damage_(0), health_(100),
-                                                                                               animation_actor_(std::make_unique<AnimationActor>()),
-                                                                                               sprite_container_(std::make_unique<SpriteContainer>()),
-                                                                                               enemy_type_(enemy_type)
+enemy_base::enemy_base(int enemy_type,const sf::Vector2f& position,std::shared_ptr<hero_base> hero_ptr):Object(position),move_direction_(0),
+                                                                                               attack_distance_(70), speed(60),
+                                                                                               attack_damage_(1), health_(100),
+                                                                                               enemy_type_(enemy_type),
+                                                                                               attack_target_(
+                                                                                                   std::move(hero_ptr)),
+                                                                                               animation_actor_(std::make_unique<AnimationActor>()),sprite_container_(std::make_unique<SpriteContainer>())
 {
     SPDLOG_INFO("Enemy base created");
     init();
@@ -30,29 +32,32 @@ float enemy_base::get_move_speed() const
     return speed;
 }
 
-sf::Vector2f enemy_base::get_move_direction() const
+float enemy_base::get_move_direction() const
 {
     return move_direction_;
 }
 
 
-void enemy_base::move()
+void enemy_base::move(const sf::Time& delta)
 {
-    const float angle = std::atan2(move_direction_.y, move_direction_.x);
-    const sf::Vector2f temp_vec2(m_position.x+speed*cos(angle),m_position.y+speed*sin(angle));
+    move_direction_ = calculate_move_direction();
+    const sf::Vector2f temp_vec2(m_position.x+speed*cos(move_direction_)*delta.asSeconds(),m_position.y+speed*sin(move_direction_)*delta.asSeconds());
     setPosition(temp_vec2);
 }
 
 void enemy_base::reset()
 {
     m_position=sf::Vector2f(0,0);
-    move_direction_=sf::Vector2f(0,0);
+    move_direction_=0;
     health_=100;
 }
 
 void enemy_base::cause_damage_to_hero() const
 {
-    // attack_target_->cause_damage_to_self(attack_damage_);
+    float hero_health=attack_target_->get_health();
+    if(hero_health>0)
+        SPDLOG_INFO("Attack target health: {}", attack_target_->get_health());
+    attack_target_->cause_damage_to_self(attack_damage_);
 }
 
 void enemy_base::cause_damage_to_self(float damage)
@@ -62,9 +67,8 @@ void enemy_base::cause_damage_to_self(float damage)
 
 float enemy_base::calculate_distance()
 {
-    // const float distance=std::sqrt(std::pow(m_position.x-attack_target_->getPosition().x,2)+std::pow(m_position.y-attack_target_->getPosition().y,2));
-    // return distance;
-    return 0;
+    const float distance=std::sqrt(std::pow(m_position.x-attack_target_->getPosition().x,2)+std::pow(m_position.y-attack_target_->getPosition().y,2));
+    return distance;
 }
 
 void enemy_base::set_attack_distance(float distance)
@@ -77,11 +81,10 @@ float enemy_base::get_attack_distance() const
     return attack_distance_;
 }
 
-float enemy_base::calculate_move_direction()
+float enemy_base::calculate_move_direction() const
 {
-    // const float angle = std::atan2(attack_target_->getPosition().y-m_position.y, attack_target_->getPosition().x-m_position.x);
-    // return angle;
-    return 0;
+    const float angle = std::atan2(attack_target_->getPosition().y-m_position.y, attack_target_->getPosition().x-m_position.x);
+    return angle;
 }
 
 void enemy_base::init()
@@ -190,10 +193,10 @@ void enemy_base::update(const sf::Time& delta)
     animation_actor_->update(delta);
     if(calculate_distance()<attack_distance_)
     {
-        Attack();
+        Attack(delta);
     }else
     {
-        move();
+        move(delta);
     }
 }
 
@@ -211,18 +214,26 @@ void enemy_base::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 }
 
-enemy1::enemy1(int enemy_type, const sf::Vector2f& position):enemy_base(enemy_type, position)
+enemy1::enemy1(int enemy_type, const sf::Vector2f& position,std::shared_ptr<hero_base> hero_ptr):enemy_base(enemy_type, position, hero_ptr)
 {
     SPDLOG_INFO("Enemy1 created");
 }
 
-void enemy1::Attack()
+void enemy1::Attack(const sf::Time& delta)
 {
     //do some actions here
-    cause_damage_to_hero();
+    static sf::Time m_attack_interval; // 攻击间隔时间
+    static sf::Time m_elapsed_time;    // 已经过去的时
+    m_elapsed_time += delta;
+    if (m_elapsed_time >= m_attack_interval)
+    {
+        cause_damage_to_hero();
+        //SPDLOG_INFO("Attack target health: {}", attack_target_->get_health());
+        m_elapsed_time = sf::Time::Zero;
+    }
 }
 
-void enemy_base::set_move_direction(const sf::Vector2f& vec2)
+void enemy_base::set_move_direction(float move_direction)
 {
-    move_direction_=vec2;
+    move_direction_=move_direction;
 }

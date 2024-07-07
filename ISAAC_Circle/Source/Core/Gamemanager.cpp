@@ -8,7 +8,7 @@ Gamemanager::Gamemanager(): enemyPool_(std::make_unique<EnemyPool>(5))
     
 }
 
-void Gamemanager::CreateEnemy(int enemyType, float x, float y)
+void Gamemanager::CreateEnemy(int enemyType, float x, float y,std::shared_ptr<hero_base> hero_)
 {
     //according to the enemy type, create the enemy
     /**
@@ -16,7 +16,7 @@ void Gamemanager::CreateEnemy(int enemyType, float x, float y)
     * 
     * now it needs positionx and positiony to create the object
     */
-    std::unique_ptr<enemy_base> tempEnemy = enemyPool_->acquire_enemy(enemyType);
+    std::unique_ptr<enemy_base> tempEnemy = enemyPool_->acquire_enemy(enemyType,hero_);
     if(tempEnemy != nullptr)
     {
         SPDLOG_INFO("get enemy successfully");

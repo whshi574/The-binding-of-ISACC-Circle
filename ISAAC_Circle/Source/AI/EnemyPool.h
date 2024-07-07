@@ -12,7 +12,7 @@ public:
     ~EnemyPool()=default;
 
     void release_enemy(int type, std::unique_ptr<enemy_base> enemy);
-    std::unique_ptr<enemy_base> acquire_enemy(int type);
+    std::unique_ptr<enemy_base> acquire_enemy(int type,std::shared_ptr<hero_base> hero_ptr);
     
     void clear(); // clear all enemies in the pool
     

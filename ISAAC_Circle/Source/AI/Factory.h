@@ -19,7 +19,7 @@ public:
      * 
      * now it needs positionx and positiony to create the object
      */
-    virtual T create_object(int type,sf::Vector2f position)=0;
+    virtual T create_object(int type,sf::Vector2f position,std::shared_ptr<hero_base> hero_ptr)=0;
 };
 
 
@@ -28,7 +28,7 @@ class factory_hero : public factory_base<std::shared_ptr<hero_base>>
 public:
     factory_hero();
     ~factory_hero() override;
-    std::shared_ptr<hero_base>create_object(int type,sf::Vector2f position) override;
+    std::shared_ptr<hero_base>create_object(int type,sf::Vector2f position,std::shared_ptr<hero_base> hero_ptr) override;
 };
 
 
@@ -37,5 +37,5 @@ class factory_enemy : public factory_base<std::unique_ptr<enemy_base>>
 public:
     factory_enemy();
     ~factory_enemy() override;
-    std::unique_ptr<enemy_base> create_object(int type,sf::Vector2f position) override;
+    std::unique_ptr<enemy_base> create_object(int type,sf::Vector2f position,std::shared_ptr<hero_base> hero_ptr) override;
 };
