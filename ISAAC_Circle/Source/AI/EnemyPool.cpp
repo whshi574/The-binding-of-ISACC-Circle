@@ -31,7 +31,6 @@ std::unique_ptr<enemy_base> EnemyPool::acquire_enemy(int type,std::shared_ptr<he
     {
         m_current_index_++;
         std::unique_ptr<enemy_base> enemy = enemy_factory_->create_object(type,sf::Vector2f(0,0),move(hero_ptr));
-        SPDLOG_INFO("EnemyPool created new enemy");
         return enemy;
     }
     return nullptr;
