@@ -60,7 +60,6 @@ private:
 
 //------Debug------//
 public:
-    bool isSHIWEIHAO_TestWorld = true;
     bool isSHIWEIHAO_TestWorld = false;
     World* SHIWEIHAO_TestWorld;
     World* LUOJIAWEN_TestWorld;
