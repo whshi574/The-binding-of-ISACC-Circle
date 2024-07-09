@@ -23,6 +23,7 @@ public:
     
 private:
     void renderTick(sf::Time deltaTime);
+    void renderDebugConsole();
     void updateTick(sf::Time deltaTime);
     void handleEventsTick(sf::Time deltaTime);
     
@@ -35,6 +36,7 @@ private:
     sf::Clock m_TickClock;
     sf::Time deltaTime;
     sf::Vector2u m_windowResolution;
+    sf::Clock m_engineRunningClock;
 
 public:
     sf::RenderWindow* GetWindow() const;
@@ -58,7 +60,7 @@ private:
 
 //------Debug------//
 public:
-    bool isSHIWEIHAO_TestWorld = false;
+    bool isSHIWEIHAO_TestWorld = true;
     World* SHIWEIHAO_TestWorld;
     World* LUOJIAWEN_TestWorld;
     World* STARTWORLD;

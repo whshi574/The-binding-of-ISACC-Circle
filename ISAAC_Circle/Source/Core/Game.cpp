@@ -89,7 +89,6 @@ void Game::runLoop()
         ImGui::SFML::Update(*m_window, m_TickClock.restart());
         updateTick(deltaTime);
         
-        ImGui::ShowDemoWindow();
         renderTick(deltaTime);
 
         m_frameCount++;
@@ -107,6 +106,7 @@ void Game::runLoop()
 
 void Game::init()
 {
+    m_engineRunningClock.restart();
     //---------------DEBUG CODE----------------
     //LUO JIA WEN change bool to use different world
     SHIWEIHAO_TestWorld = new SHIWEIHAO_Test(this);
@@ -130,8 +130,19 @@ void Game::renderTick(sf::Time deltaTime)
         LUOJIAWEN_TestWorld->RenderTick(*m_window);
     }
     //-------------END DEBUG CODE--------------
+    renderDebugConsole();
     ImGui::SFML::Render(*m_window);
     m_window->display();
+}
+
+void Game::renderDebugConsole()
+{
+    ImGui::Begin("Engine Stats");
+    ImGui::SetWindowSize("Engine Stats", ImVec2(300, 600), ImGuiCond_FirstUseEver);
+    ImGui::Text("Running Time: %.3f seconds", m_engineRunningClock.getElapsedTime().asSeconds());
+    ImGui::Text("Window Width: %d - Window Height: %d", m_windowWidth, m_windowHeight);
+    ImGui::Text("Frame Rate: %d FPS", m_frameRate);
+    ImGui::End();
 }
 
 void Game::updateTick(sf::Time deltaTime)
@@ -143,7 +154,6 @@ void Game::updateTick(sf::Time deltaTime)
     {
         LUOJIAWEN_TestWorld->UpdateTick(deltaTime);
     }
-
 }
 
 void Game::handleEventsTick(sf::Time deltaTime)
@@ -157,6 +167,12 @@ void Game::handleEventsTick(sf::Time deltaTime)
         {
         case sf::Event::Closed:
             m_window->close();
+            break;
+        case sf::Event::Resized:
+            m_windowWidth = event.size.width;
+            m_windowHeight = event.size.height;
+            m_windowResolution.x = m_windowWidth;
+            m_windowResolution.y = m_windowHeight;
             break;
         default:
             {
@@ -172,15 +188,6 @@ void Game::handleEventsTick(sf::Time deltaTime)
 
         }
     }
-
-    // if (isSHIWEIHAO_TestWorld)
-    // {
-    //     STARTWORLD->HandleEventsTick(event);
-    // }else
-    // {
-    //     LUOJIAWEN_TestWorld->HandleEventsTick(event);
-    // }
-
 }
 
 sf::RenderWindow* Game::GetWindow() const
