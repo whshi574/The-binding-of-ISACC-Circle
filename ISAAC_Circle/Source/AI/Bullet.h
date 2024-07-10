@@ -29,8 +29,8 @@ class Bullet_Base:public Object
         
     public:
         //子弹基类专属需要子类重载的, 用于初始化子弹的动画
-        virtual void init()=0;
-        virtual void LoadAndSetTextures()=0;
+        virtual void init();
+        virtual void LoadAndSetTextures();
 };
 
 class Bullet_Player1:public Bullet_Base
