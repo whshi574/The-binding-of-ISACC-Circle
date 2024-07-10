@@ -33,6 +33,8 @@ StartMenuWorld::StartMenuWorld(Game* game) : World(game)
     tempSequence->addClip(std::make_unique<SpriteAnimationClip>(spriteStartButton_1, 0.15f));
 
     startButtonActor->playAnimationByName("ShakeTitle",true,true);
+
+    changeUI(playMenuContainer, downAnimationPos, titleContainer, upAnimationPos);
 }
 
 
@@ -177,12 +179,24 @@ void StartMenuWorld::LoadAndSetTextures()
     
     playMenuContainer->setPosition(sf::Vector2f(GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2 + 1000));
     playMenuContainer->setScale(4.f,4.f);
-    
-    startMenuOutAnimation(titleContainer, upAnimationPos);
+}
+
+void StartMenuWorld::changeUI(SpriteContainer* inContainer, sf::Vector2f inContainerStartPos,
+    SpriteContainer* outContainer, sf::Vector2f outContainerTargetPos)
+{
+    startMenuOutAnimation(outContainer, outContainerTargetPos);
+    startMenuInAnimation(inContainer, inContainerStartPos);
 }
 
 void StartMenuWorld::startMenuInAnimation(SpriteContainer* container, sf::Vector2f startPos)
 {
+    if (container == nullptr)
+    {
+        SPDLOG_ERROR("Your inAnimationContainer is nullptr when you try to play in animation.");
+        LOG_GAME_ERROR("Your inAnimationContainer is nullptr when you try to play in animation.");
+        return;
+    }
+    
     if (isplayMenuInAnimating)
     {
         
@@ -190,10 +204,19 @@ void StartMenuWorld::startMenuInAnimation(SpriteContainer* container, sf::Vector
     
     isplayMenuInAnimating = true;
     inAnimationContainer = container;
+    inAnimationStartPos = startPos;
+    inAnimationTargetPos = middleAnimationPos;
 }
 
 void StartMenuWorld::startMenuOutAnimation(SpriteContainer* container, sf::Vector2f targetPos)
 {
+    if (container == nullptr)
+    {
+        SPDLOG_ERROR("Your outAnimationContainer is nullptr when you try to play out animation.");
+        LOG_GAME_ERROR("Your outAnimationContainer is nullptr when you try to play out animation.");
+        return;
+    }
+    
     if (isplayMenuOutAnimating)
     {
         
@@ -210,14 +233,56 @@ void StartMenuWorld::playMenuInAnimationTick(sf::Time deltaTime)
     if (!isplayMenuInAnimating)
         return;
 
-    if (inAnimationContainer = nullptr)
+    if (inAnimationContainer == nullptr)
     {
         SPDLOG_ERROR("Your inAnimationContainer is nullptr when you try to play in animation.");
         LOG_GAME_ERROR("Your inAnimationContainer is nullptr when you try to play in animation.");
         return;
     }
 
+    bool xEqual = false;
+    bool yEqual = false;
+
+    if (MathUtils::approximatelyEqual(inAnimationStartPos.x, inAnimationTargetPos.x, 0.01f))
+    {
+        xEqual= true;
+    }
+
+    if (MathUtils::approximatelyEqual(inAnimationStartPos.y, inAnimationTargetPos.y, 0.01f))
+    {
+        yEqual= true;
+    }
+
+    if (xEqual && yEqual)
+    {
+        isplayMenuInAnimating = false;
+        inAnimationContainer->setPosition(inAnimationTargetPos);
+        return;
+    }
+
+    if (xEqual)
+        goto Modify_Y;
     
+    if (inAnimationStartPos.x > inAnimationTargetPos.x)
+    {
+        inAnimationStartPos.x -= 1000.f * deltaTime.asSeconds();
+    }else
+    {
+        inAnimationStartPos.x += 1000.f * deltaTime.asSeconds();
+    }
+    Modify_Y:
+        if (yEqual)
+            goto Set_Position;
+    
+    if (inAnimationStartPos.y > inAnimationTargetPos.y)
+    {
+        inAnimationStartPos.y -= 1000.f * deltaTime.asSeconds();
+    }else
+    {
+        inAnimationStartPos.y += 1000.f * deltaTime.asSeconds();
+    }
+    Set_Position:
+        inAnimationContainer->setPosition(inAnimationStartPos);
 }
 
 void StartMenuWorld::playMenuOutAnimationTick(sf::Time deltaTime)
@@ -232,11 +297,28 @@ void StartMenuWorld::playMenuOutAnimationTick(sf::Time deltaTime)
         return;
     }
 
-    if (MathUtils::approximatelyEqual(outAnimationStartPos, outAnimationTargetPos, 0.01f))
+    bool xEqual = false;
+    bool yEqual = false;
+
+    if (MathUtils::approximatelyEqual(outAnimationStartPos.x, outAnimationTargetPos.x, 0.01f))
     {
-        outAnimationContainer->setPosition(outAnimationTargetPos);
-        isplayMenuOutAnimating = false;
+        xEqual= true;
     }
+
+    if (MathUtils::approximatelyEqual(outAnimationStartPos.y, outAnimationTargetPos.y, 0.01f))
+    {
+        yEqual= true;
+    }
+
+    if (xEqual && yEqual)
+    {
+        isplayMenuOutAnimating = false;
+        outAnimationContainer->setPosition(outAnimationTargetPos);
+        return;
+    }
+
+    if (xEqual)
+        goto Modify_Y;
     
     if (outAnimationStartPos.x > outAnimationTargetPos.x)
     {
@@ -245,7 +327,10 @@ void StartMenuWorld::playMenuOutAnimationTick(sf::Time deltaTime)
     {
         outAnimationStartPos.x += 1000.f * deltaTime.asSeconds();
     }
-
+Modify_Y:
+    if (yEqual)
+        goto Set_Position;
+    
     if (outAnimationStartPos.y > outAnimationTargetPos.y)
     {
         outAnimationStartPos.y -= 1000.f * deltaTime.asSeconds();
@@ -253,7 +338,6 @@ void StartMenuWorld::playMenuOutAnimationTick(sf::Time deltaTime)
     {
         outAnimationStartPos.y += 1000.f * deltaTime.asSeconds();
     }
-
+Set_Position:
     outAnimationContainer->setPosition(outAnimationStartPos);
-    SPDLOG_INFO("{0}, {1}", outAnimationStartPos.x, outAnimationStartPos.y);
 }

@@ -29,6 +29,7 @@ public:
 private:
     void LoadAndSetTextures();
 private:
+    int currentUIIndex = 0;
     //Start Menu
     sf::Texture* textureTitleMenu;
     sf::Sprite* spriteTitleBG;
@@ -51,6 +52,7 @@ private:
     sf::Sprite* playMenuBeChooesedArrow;
 
 private:
+    void changeUI(SpriteContainer* inContainer, sf::Vector2f inContainerStartPos, SpriteContainer* outContainer, sf::Vector2f outContainerTargetPos);
     void startMenuInAnimation(SpriteContainer* container, sf::Vector2f startPos);
     void startMenuOutAnimation(SpriteContainer* container, sf::Vector2f targetPos);
     
