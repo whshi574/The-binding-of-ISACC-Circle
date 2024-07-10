@@ -27,6 +27,10 @@ public:
     virtual void HandleEventsTick(const sf::Event& event) override;
 
 private:
+    void handleTitleMenuInput(const sf::Event& event);
+    void handlePlayMenuInput(const sf::Event& event);
+    
+private:
     void LoadAndSetTextures();
 private:
     int currentUIIndex = 0;
@@ -52,6 +56,12 @@ private:
     sf::Sprite* playMenuBeChooesedArrow;
 
 private:
+    int currentPlayMenuChooseButtonIndex = 0;
+    void choosePrevChooseButton();
+    void chooseNextChooseButton();
+    void changePlayMenuChooseButton(int index);
+
+private:
     void changeUI(SpriteContainer* inContainer, sf::Vector2f inContainerStartPos, SpriteContainer* outContainer, sf::Vector2f outContainerTargetPos);
     void startMenuInAnimation(SpriteContainer* container, sf::Vector2f startPos);
     void startMenuOutAnimation(SpriteContainer* container, sf::Vector2f targetPos);
@@ -67,10 +77,12 @@ private:
     
     SpriteContainer* inAnimationContainer;
     sf::Vector2f inAnimationStartPos;
+    sf::Vector2f inTempStartPos;
     sf::Vector2f inAnimationTargetPos;
     
     SpriteContainer* outAnimationContainer;
     sf::Vector2f outAnimationStartPos;
+    sf::Vector2f outTempStartPos;
     sf::Vector2f outAnimationTargetPos;
 
     bool isplayMenuInAnimating = false;

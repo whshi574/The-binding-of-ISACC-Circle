@@ -18,7 +18,7 @@ StartMenuWorld::StartMenuWorld(Game* game) : World(game)
 {
     //Todo: Resoulution change maybe need to update the value
     float x = GetGame()->GetWindowHeight();
-    x = x *(-1);
+    x = x *(-1) + 600.f;
     upAnimationPos = sf::Vector2f(GetGame()->GetWindowWidth()/2, x);
     downAnimationPos = sf::Vector2f(GetGame()->GetWindowWidth()/2, 3*GetGame()->GetWindowHeight()/2 );
     leftAnimationPos = sf::Vector2f(-2*GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2 );
@@ -33,8 +33,6 @@ StartMenuWorld::StartMenuWorld(Game* game) : World(game)
     tempSequence->addClip(std::make_unique<SpriteAnimationClip>(spriteStartButton_1, 0.15f));
 
     startButtonActor->playAnimationByName("ShakeTitle",true,true);
-
-    changeUI(playMenuContainer, downAnimationPos, titleContainer, upAnimationPos);
 }
 
 
@@ -62,6 +60,45 @@ void StartMenuWorld::HandleEventsTick(const sf::Event& event)
 {
     World::HandleEventsTick(event);
     startButtonActor->handleEvent(event);
+
+    if (currentUIIndex == 0)
+        handleTitleMenuInput(event);
+    if (currentUIIndex == 1)
+        handlePlayMenuInput(event);
+}
+
+
+void StartMenuWorld::handleTitleMenuInput(const sf::Event& event)
+{
+    if (event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::Space){
+            changeUI(playMenuContainer, downAnimationPos, titleContainer, upAnimationPos);
+        }
+    }
+        
+}
+
+void StartMenuWorld::handlePlayMenuInput(const sf::Event& event)
+{
+    if (event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::Up){
+            choosePrevChooseButton();
+        }
+
+        if (event.key.code == sf::Keyboard::Down){
+            chooseNextChooseButton();
+        }
+
+        if (event.key.code == sf::Keyboard::Enter){
+            //Press button
+        }
+
+        if (event.key.code == sf::Keyboard::Escape){
+            changeUI(titleContainer, upAnimationPos, playMenuContainer, downAnimationPos);
+        }
+    }
 }
 
 void StartMenuWorld::LoadAndSetTextures()
@@ -176,14 +213,59 @@ void StartMenuWorld::LoadAndSetTextures()
     playMenuContainer->setRelativePosition(*playMenuStatsButton, sf::Vector2f(0, buttonGap*1));
     playMenuContainer->setRelativePosition(*playMenuOptionsButton, sf::Vector2f(0, buttonGap*2));
     playMenuContainer->setRelativePosition(*playMenuBeChooesedArrow, sf::Vector2f(-260, -buttonGap*2));
+    changePlayMenuChooseButton(0);
     
     playMenuContainer->setPosition(sf::Vector2f(GetGame()->GetWindowWidth()/2, GetGame()->GetWindowHeight()/2 + 1000));
     playMenuContainer->setScale(4.f,4.f);
 }
 
-void StartMenuWorld::changeUI(SpriteContainer* inContainer, sf::Vector2f inContainerStartPos,
-    SpriteContainer* outContainer, sf::Vector2f outContainerTargetPos)
+void StartMenuWorld::choosePrevChooseButton()
 {
+    currentPlayMenuChooseButtonIndex--;
+    changePlayMenuChooseButton(currentPlayMenuChooseButtonIndex);
+}
+
+void StartMenuWorld::chooseNextChooseButton()
+{
+    currentPlayMenuChooseButtonIndex++;
+    changePlayMenuChooseButton(currentPlayMenuChooseButtonIndex);
+}
+
+void StartMenuWorld::changePlayMenuChooseButton(int index)
+{
+    if (index < 0)
+        index = 0;
+
+    if (index > 4)
+        index = 4;
+    
+    currentPlayMenuChooseButtonIndex = index;
+    
+    if (currentPlayMenuChooseButtonIndex == 0)
+        playMenuContainer->setRelativePosition(*playMenuBeChooesedArrow, sf::Vector2f(-260, -260));
+    if (currentPlayMenuChooseButtonIndex == 1)
+        playMenuContainer->setRelativePosition(*playMenuBeChooesedArrow, sf::Vector2f(-260, -130));
+    if (currentPlayMenuChooseButtonIndex == 2)
+        playMenuContainer->setRelativePosition(*playMenuBeChooesedArrow, sf::Vector2f(-260, 0));
+    if (currentPlayMenuChooseButtonIndex == 3)
+        playMenuContainer->setRelativePosition(*playMenuBeChooesedArrow, sf::Vector2f(-260, 130));
+    if (currentPlayMenuChooseButtonIndex == 4)
+        playMenuContainer->setRelativePosition(*playMenuBeChooesedArrow, sf::Vector2f(-260, 260));
+}
+
+void StartMenuWorld::changeUI(SpriteContainer* inContainer, sf::Vector2f inContainerStartPos,
+                              SpriteContainer* outContainer, sf::Vector2f outContainerTargetPos)
+{
+    if (inContainer == titleContainer)
+    {
+        currentUIIndex = 0;
+    }
+
+    if (inContainer == playMenuContainer)
+    {
+        currentUIIndex = 1;
+    }
+    
     startMenuOutAnimation(outContainer, outContainerTargetPos);
     startMenuInAnimation(inContainer, inContainerStartPos);
 }
@@ -197,15 +279,19 @@ void StartMenuWorld::startMenuInAnimation(SpriteContainer* container, sf::Vector
         return;
     }
     
+    inAnimationContainer = container;
+    inAnimationTargetPos = middleAnimationPos;
+    
     if (isplayMenuInAnimating)
     {
-        
+        inTempStartPos = inAnimationStartPos;
+        inAnimationStartPos = outTempStartPos;
+    }else
+    {
+        inAnimationStartPos = startPos;
     }
-    
+
     isplayMenuInAnimating = true;
-    inAnimationContainer = container;
-    inAnimationStartPos = startPos;
-    inAnimationTargetPos = middleAnimationPos;
 }
 
 void StartMenuWorld::startMenuOutAnimation(SpriteContainer* container, sf::Vector2f targetPos)
@@ -219,12 +305,15 @@ void StartMenuWorld::startMenuOutAnimation(SpriteContainer* container, sf::Vecto
     
     if (isplayMenuOutAnimating)
     {
-        
+        outTempStartPos = outAnimationStartPos;
+        outAnimationStartPos = inTempStartPos;
+    }else
+    {
+        outAnimationStartPos = middleAnimationPos;
     }
     
     isplayMenuOutAnimating = true;
     outAnimationContainer = container;
-    outAnimationStartPos = middleAnimationPos;
     outAnimationTargetPos = targetPos;
 }
 
