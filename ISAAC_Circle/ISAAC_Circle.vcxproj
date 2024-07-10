@@ -604,6 +604,7 @@
       <AdditionalIncludeDirectories>E:\DeveloperKits_And_IDE\SFML\Project\ISAAC_Circle\spdlog\include;E:\DeveloperKits_And_IDE\SFML\Project\ISAAC_Circle\SFML-2.6.1\include;E:\DeveloperKits_And_IDE\SFML\Project\ISAAC_Circle\ISAAC_Circle\Source</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Source\Tools\MathUtils.cpp" />
     <ClCompile Include="Source\Tools\SFMLTool.cpp" />
     <ClCompile Include="Source\Tools\TextureParser.cpp" />
     <ClCompile Include="Source\UI\Button.cpp" />
@@ -631,6 +632,7 @@
     <ClInclude Include="Source\ThirdParty\nlohmann\json.hpp" />
     <ClInclude Include="Source\ThirdParty\nlohmann\json_fwd.hpp" />
     <ClInclude Include="Source\Tools\GameLog.h" />
+    <ClInclude Include="Source\Tools\MathUtils.h" />
     <ClInclude Include="Source\Tools\SFMLTool.h" />
     <ClInclude Include="Source\Tools\TextureParser.h" />
     <ClInclude Include="Source\UI\Button.h" />

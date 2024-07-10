@@ -71,7 +71,7 @@ void World::AddObjectToRenderTick(sf::Drawable* drawable)
     m_drawables.push_back(drawable);
 }
 
-void World::AddActorToWorld(Object* object)
+void World::AddObjectToWorld(Object* object)
 {
     if (object == nullptr)
     {
@@ -81,4 +81,24 @@ void World::AddActorToWorld(Object* object)
     }
 
     m_objects.push_back(object);
+}
+
+template <typename T>
+std::vector<T*> World::GetAllObjectsOfClass(const T valueType)
+{
+    std::vector<T*> result;
+
+    for (Object* object : m_objects)
+    {
+        if (typeid(*object) == typeid(T))
+        {
+            T* castedObject = dynamic_cast<T*>(object);
+            if (castedObject)
+            {
+                result.push_back(castedObject);
+            }
+        }
+    }
+
+    return result;
 }

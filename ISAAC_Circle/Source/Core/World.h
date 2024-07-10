@@ -28,6 +28,10 @@ public:
 private:
     Game* m_game;
 
+public:
+    //Todo: Need to be tested
+    template<typename T>
+    std::vector<T*> GetAllObjectsOfClass(const T valueType);
 private:
     std::vector<sf::Drawable*> m_drawables;
     std::vector<Object*> m_objects;
@@ -35,5 +39,5 @@ private:
 public:
     void AddObjectToRenderTick(sf::Drawable* drawable);
 
-    void AddActorToWorld(Object* actor);
+    void AddObjectToWorld(Object* object);
 };
