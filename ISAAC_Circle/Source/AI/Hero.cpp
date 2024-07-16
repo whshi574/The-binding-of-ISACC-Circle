@@ -17,6 +17,7 @@ hero_base::hero_base(const sf::Vector2f& position):Object(position),
 
 {
     init();
+
 }
 
 void hero_base::cause_damage_to_self(float damage)

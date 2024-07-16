@@ -3,9 +3,18 @@
 #include <iostream>
 #include <spdlog/spdlog.h>
 
+Gamemanager* Gamemanager::instance_ = nullptr;
 Gamemanager::Gamemanager(): enemyPool_(std::make_unique<EnemyPool>(5))
 {
     
+}
+
+Gamemanager* Gamemanager::get_instance()
+{
+    if (instance_ == nullptr) {
+        instance_ = new Gamemanager();
+    }
+    return instance_;
 }
 
 void Gamemanager::CreateEnemy(int enemyType, float x, float y,std::shared_ptr<hero_base> hero_)
@@ -24,6 +33,10 @@ void Gamemanager::CreateEnemy(int enemyType, float x, float y,std::shared_ptr<he
         enemies_.push_back(move(tempEnemy)); 
     }
 
+}
+
+void Gamemanager::CreateHero(int heroType, float x, float y)
+{
 }
 
 void Gamemanager::remove_enemy(int enemyID)

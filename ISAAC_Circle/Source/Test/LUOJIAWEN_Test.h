@@ -1,5 +1,6 @@
 #pragma once
 #include "AI/Hero.h"
+#include "Core/Gamemanager.h"
 #include "Core/World.h"
 
 class LUOJIAWEN_Test : public World
@@ -14,8 +15,9 @@ public:
     void create_enemy();
 private:
     std::shared_ptr<hero_base> hero;
-    std::unique_ptr<class Gamemanager> gamemanager_;
-
+    
+    Gamemanager* gamemanager_;
+    
     sf::Clock clock;
     sf::Time timeSinceLastCall_create_enemy;
     sf::Time create_enemy_interval;

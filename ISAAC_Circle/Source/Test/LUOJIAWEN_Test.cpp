@@ -7,9 +7,10 @@
 #include "SFML/System/Time.hpp"
 #include "Core/Game.h"
 #include "Core/Gamemanager.h"
-LUOJIAWEN_Test::LUOJIAWEN_Test(Game* game): World(game),gamemanager_(std::make_unique<Gamemanager>()),
+LUOJIAWEN_Test::LUOJIAWEN_Test(Game* game): World(game),
 timeSinceLastCall_create_enemy(sf::Time::Zero),create_enemy_interval(sf::seconds(2.0f))
 {
+    gamemanager_=Gamemanager::get_instance();
     factory_hero* factory_hero_ =new factory_hero();
     hero=factory_hero_->create_object(1,sf::Vector2f(GetGame()->GetWindowWidth()/2,GetGame()->GetWindowHeight()/2),nullptr);
     delete factory_hero_;

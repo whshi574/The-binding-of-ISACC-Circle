@@ -29,7 +29,7 @@ public:
     virtual void init();
 
     virtual void LoadAndSetTextures();
-private:
+protected:
     //store observers, only use in Hero class,so don't need to use shared_ptr
     std::vector<class Observer_Base*> observers;
 
@@ -44,4 +44,5 @@ private:
     
     float health;
     float max_health;
+    
 };
