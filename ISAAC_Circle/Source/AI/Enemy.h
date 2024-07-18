@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 
+#include "Bullet.h"
 #include "..\Core\Object.h"
 #include "Animation/AnimationActor.h"
 #include "Core/Component/SpriteContainer.h"
@@ -58,6 +59,9 @@ public:
     void render(sf::RenderWindow& window) override;
     void handleEvent(const sf::Event& event) override;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    //碰撞函数
+    bool check_collision(const std::shared_ptr<Bullet_Base> bullet) const;
 
     
 private:

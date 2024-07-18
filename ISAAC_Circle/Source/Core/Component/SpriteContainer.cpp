@@ -188,3 +188,13 @@ void SpriteContainer::updateRotations()
         sprites[i]->setRotation(angle + relativeAngles[i]);
     }
 }
+
+sf::FloatRect SpriteContainer::getGlobalBounds() const
+{
+    if (sprites.empty()) {
+        SPDLOG_WARN("Sprite container is empty, getGlobalBounds will be return 0.");
+        return sf::FloatRect(0, 0, 0, 0);
+    }
+    sf::FloatRect bounds = sprites[0]->getGlobalBounds();
+    return bounds;
+}

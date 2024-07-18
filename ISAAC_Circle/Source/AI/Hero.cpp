@@ -6,13 +6,14 @@
 #include "Observer.h"
 #include "Animation/AnimationSequence.h"
 #include "Animation/SpriteAnimationClip.h"
+#include "Core/Gamemanager.h"
 #include "Tools/SFMLTool.h"
 #include "Tools/TextureParser.h"
 
 hero_base::hero_base(const sf::Vector2f& position):Object(position),
                                                    animation_actor_(std::make_unique<AnimationActor>()),
                                                    velocity_(0.0f, 0.0f),
-                                                   speed(500.0f), health(100), max_health(100)
+                                                   speed(500.0f), health(100), max_health(100),attack_interval(sf::seconds(2.0f)),attack_distance(200.0f)
 
 
 {
@@ -63,6 +64,7 @@ void hero_base::render(sf::RenderWindow& window)
 
 void hero_base::update(const sf::Time& delta)
 {
+    attack();
 
     m_position += velocity_ * delta.asSeconds();
 
@@ -259,4 +261,25 @@ void hero_base::LoadAndSetTextures()
     run_sprites_.push_back(run7_sprite);
     run_sprites_.push_back(run8_sprite);*/
     
+}
+
+void hero_base::attack()
+{
+    if (attack_clock.getElapsedTime() >= attack_interval)
+    {
+        //发动攻击
+        sf::Vector2f target_position = Gamemanager::get_instance()->get_attack_target_pos();
+        //计算自身与target的距离
+        sf::Vector2f direction = target_position - m_position;
+        float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+        if (distance <= attack_distance)
+        {
+            SPDLOG_INFO("Hero attack");
+            //计算方向
+            const float angle = std::atan2(target_position.y-m_position.y, target_position.x-m_position.x);
+            Gamemanager::get_instance()->attack(angle);
+            attack_clock.restart();
+        }
+    }
 }

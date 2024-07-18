@@ -14,7 +14,6 @@ public:
     void HandleEventsTick(const sf::Event& event) override;
     void create_enemy();
 private:
-    std::shared_ptr<hero_base> hero;
     
     Gamemanager* gamemanager_;
     

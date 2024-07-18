@@ -18,7 +18,6 @@ enemy_base::enemy_base(int enemy_type,const sf::Vector2f& position,std::shared_p
                                                                                                    std::move(hero_ptr)),
                                                                                                animation_actor_(std::make_unique<AnimationActor>()),sprite_container_(std::make_unique<SpriteContainer>())
 {
-    SPDLOG_INFO("Enemy base created");
     init();
 }
 
@@ -214,9 +213,13 @@ void enemy_base::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 }
 
+bool enemy_base::check_collision(const std::shared_ptr<Bullet_Base> bullet) const
+{
+    return sprite_container_->getGlobalBounds().intersects(bullet->get_global_bounds());
+}
+
 enemy1::enemy1(int enemy_type, const sf::Vector2f& position,std::shared_ptr<hero_base> hero_ptr):enemy_base(enemy_type, position, hero_ptr)
 {
-    SPDLOG_INFO("Enemy1 created");
 }
 
 void enemy1::Attack(const sf::Time& delta)

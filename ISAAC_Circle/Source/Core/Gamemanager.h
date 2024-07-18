@@ -20,12 +20,19 @@ public:
     static Gamemanager* get_instance();
     ~Gamemanager()=default;
     
-    void CreateEnemy(int enemyType, float x, float y,std::shared_ptr<hero_base> hero_);
+    void CreateEnemy(int enemyType, float x, float y);
     void CreateHero(int heroType, float x, float y);
     void remove_enemy(int enemyID);
     void update(sf::Time deltaTime);
     void render(sf::RenderWindow& window);
     void handle_event(const sf::Event& event);
+
+    //提供给Hero的关于攻击的函数
+    sf::Vector2f get_attack_target_pos() const;
+    void attack(float angle);
+
+    //检测碰撞
+    void check_collision();
 private:
     std::vector<std::unique_ptr<enemy_base>> enemies_;
     std::vector<std::shared_ptr<Bullet_Base>> enemies_bullets_;

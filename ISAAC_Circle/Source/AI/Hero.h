@@ -29,6 +29,13 @@ public:
     virtual void init();
 
     virtual void LoadAndSetTextures();
+
+    //关于攻击的函数
+    void attack();
+    
+
+
+    
 protected:
     //store observers, only use in Hero class,so don't need to use shared_ptr
     std::vector<class Observer_Base*> observers;
@@ -44,5 +51,10 @@ protected:
     
     float health;
     float max_health;
+
+    //关于攻击
+    sf::Time attack_interval;
+    sf::Clock attack_clock;
+    float attack_distance;
     
 };

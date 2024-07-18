@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
 namespace sf
@@ -49,5 +50,8 @@ private:
     void updatePositions();
     void updateScales();
     void updateRotations();
+public:
+    //碰撞相关
+    sf::FloatRect getGlobalBounds() const;
 
 };
