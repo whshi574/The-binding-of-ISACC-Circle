@@ -25,7 +25,10 @@ class Bullet_Base:public Object
         //关于子弹移动
         float move_direction_;
         float speed_;
-        float damage_;
+
+        //关于子弹伤害
+    public:
+        float damage_; //设置成public方便外部调用
         
     public:
         //子弹基类专属需要子类重载的, 用于初始化子弹的动画

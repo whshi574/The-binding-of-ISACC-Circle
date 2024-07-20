@@ -6,7 +6,7 @@
 #include "Tools/TextureParser.h"
 
 Bullet_Base::Bullet_Base(const sf::Vector2f& position,float move_direction):Object(position), animation_actor_(std::make_unique<AnimationActor>()),
-                                                       move_direction_(move_direction), speed_(50.0f),damage_(1.0f)
+                                                       move_direction_(move_direction), speed_(200.0f),damage_(10.0f)
 {
     init();
 }

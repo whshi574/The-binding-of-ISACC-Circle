@@ -44,12 +44,6 @@ void Gamemanager::CreateHero(int heroType, float x, float y)
     delete factory_hero_;
 }
 
-void Gamemanager::remove_enemy(int enemyID)
-{
-    auto temp=move(enemies_.back());
-    enemies_.pop_back();
-    enemyPool_->release_enemy(enemyID,move(temp));
-}
 
 void Gamemanager::update(sf::Time deltaTime)
 {
@@ -122,13 +116,20 @@ void Gamemanager::check_collision()
     for (auto it = hero_bullets_.begin(); it != hero_bullets_.end();)
     {
         bool collision = false;
-        for (auto& enemy : enemies_)
+        for (size_t i = 0; i < enemies_.size(); ++i)
         {
+            auto& enemy = enemies_[i];
             if (enemy->check_collision(*it))
             {
-                SPDLOG_INFO("hero bullet collide with enemy");
+                
+                float enemylife = enemy->cause_damage_to_self((*it)->damage_);
+                
+                if (enemylife <= 0)
+                {
+                    enemyPool_->release_enemy(move(enemy));
+                    enemies_.erase(enemies_.begin() + i);
+                }
                 it = hero_bullets_.erase(it);
-                // enemy->hit();
                 collision = true;
                 break;
             }

@@ -13,7 +13,7 @@
 hero_base::hero_base(const sf::Vector2f& position):Object(position),
                                                    animation_actor_(std::make_unique<AnimationActor>()),
                                                    velocity_(0.0f, 0.0f),
-                                                   speed(500.0f), health(100), max_health(100),attack_interval(sf::seconds(2.0f)),attack_distance(200.0f)
+                                                   speed(500.0f), health(100), max_health(100),attack_interval(sf::seconds(0.5f)),attack_distance(600.0f)
 
 
 {
@@ -275,7 +275,7 @@ void hero_base::attack()
 
         if (distance <= attack_distance)
         {
-            SPDLOG_INFO("Hero attack");
+            
             //计算方向
             const float angle = std::atan2(target_position.y-m_position.y, target_position.x-m_position.x);
             Gamemanager::get_instance()->attack(angle);

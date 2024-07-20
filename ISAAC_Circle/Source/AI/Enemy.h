@@ -40,7 +40,7 @@ public:
     
     void cause_damage_to_hero() const;
 
-    void cause_damage_to_self(float damage);
+    float cause_damage_to_self(float damage);
 
     float calculate_distance();
 
@@ -63,6 +63,8 @@ public:
     //碰撞函数
     bool check_collision(const std::shared_ptr<Bullet_Base> bullet) const;
 
+
+
     
 private:
     //Control the Enemy Move Direction
@@ -80,13 +82,14 @@ private:
     //health
     float health_;
 
-    int enemy_type_;
 
     std::shared_ptr<hero_base> attack_target_;
     
     std::unique_ptr<AnimationActor> animation_actor_;
     std::vector<sf::Texture*>   textures_;
     std::unique_ptr<SpriteContainer> sprite_container_;
+
+    int enemy_type_;    
 };
 class enemy1 : public enemy_base
 {

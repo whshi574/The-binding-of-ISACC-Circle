@@ -13,10 +13,15 @@
 enemy_base::enemy_base(int enemy_type,const sf::Vector2f& position,std::shared_ptr<hero_base> hero_ptr):Object(position),move_direction_(0),
                                                                                                attack_distance_(70), speed(60),
                                                                                                attack_damage_(1), health_(100),
-                                                                                               enemy_type_(enemy_type),
                                                                                                attack_target_(
                                                                                                    std::move(hero_ptr)),
-                                                                                               animation_actor_(std::make_unique<AnimationActor>()),sprite_container_(std::make_unique<SpriteContainer>())
+                                                                                               animation_actor_(
+                                                                                                   std::make_unique<
+                                                                                                       AnimationActor>()),
+                                                                                               sprite_container_(
+                                                                                                   std::make_unique<
+                                                                                                       SpriteContainer>()),
+                                                                                               enemy_type_(enemy_type)
 {
     init();
 }
@@ -59,9 +64,14 @@ void enemy_base::cause_damage_to_hero() const
     attack_target_->cause_damage_to_self(attack_damage_);
 }
 
-void enemy_base::cause_damage_to_self(float damage)
+float enemy_base::cause_damage_to_self(float damage)
 {
     health_ -= damage;
+    if(health_<=0)
+    {
+        return 0;
+    }
+    return health_;
 }
 
 float enemy_base::calculate_distance()

@@ -12,10 +12,10 @@ EnemyPool::EnemyPool(size_t size): m_size_(size), m_current_index_(0),
 {
 }
 
-void EnemyPool::release_enemy(int type, std::unique_ptr<enemy_base> enemy)
+void EnemyPool::release_enemy(std::unique_ptr<enemy_base> enemy)
 {
     enemy->reset();
-    pools[type].push_back(std::move(enemy));
+    pools[enemy->get_enemy_type()].push_back(std::move(enemy));
 }
 
 std::unique_ptr<enemy_base> EnemyPool::acquire_enemy(int type,std::shared_ptr<hero_base> hero_ptr)
@@ -29,6 +29,7 @@ std::unique_ptr<enemy_base> EnemyPool::acquire_enemy(int type,std::shared_ptr<he
         // 没有符合的对象，创建新的对象
     if(m_current_index_ < m_size_)
     {
+        SPDLOG_INFO("EnemyPool::acquire_enemy create new enemy");
         m_current_index_++;
         std::unique_ptr<enemy_base> enemy = enemy_factory_->create_object(type,sf::Vector2f(0,0),move(hero_ptr));
         return enemy;
