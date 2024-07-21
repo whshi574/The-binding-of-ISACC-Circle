@@ -4,9 +4,11 @@
 #include "Animation/SpriteAnimationClip.h"
 #include "Tools/SFMLTool.h"
 #include "Tools/TextureParser.h"
-
+#include "Core/Config.h"
 Bullet_Base::Bullet_Base(const sf::Vector2f& position,float move_direction):Object(position), animation_actor_(std::make_unique<AnimationActor>()),
-                                                       move_direction_(move_direction), speed_(200.0f),damage_(10.0f)
+                                                                            damage_(10.0f), type_(1),
+                                                                            move_direction_(move_direction),
+                                                                            speed_(200.0f),is_out_of_bounds_(false)
 {
     init();
 }
@@ -24,6 +26,7 @@ void Bullet_Base::update(const sf::Time& delta)
     Object::update(delta);
     animation_actor_->update(delta);
     move(delta);
+    is_out_of_screen_();
     SpriteContainer_.setPosition(m_position);
 }
 
@@ -34,6 +37,16 @@ void Bullet_Base::handleEvent(const sf::Event& event)
 
 void Bullet_Base::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+}
+
+void Bullet_Base::is_out_of_screen_()
+{
+    //子弹位置脱离屏幕边缘
+    
+    if (m_position.x < 0 || m_position.x > WINDOW_WIDTH || m_position.y < 0 || m_position.y > WINDOW_HEIGHT)
+    {
+        is_out_of_bounds_ = true;
+    }
 }
 
 void Bullet_Base::init()
@@ -82,6 +95,13 @@ void Bullet_Base::move(const sf::Time& delta)
 sf::FloatRect Bullet_Base::get_global_bounds() const
 {
     return SpriteContainer_.getGlobalBounds();
+}
+
+void Bullet_Base::reset()
+{
+    move_direction_=0.0f;
+    setPosition(sf::Vector2f(0.0f,0.0f));
+    is_out_of_bounds_=false;
 }
 
 Bullet_Player1::Bullet_Player1(const sf::Vector2f& position,float move_direction):Bullet_Base(position,move_direction)

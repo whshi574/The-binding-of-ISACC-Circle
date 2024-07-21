@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "AI/Bullet.h"
+#include "AI/BulletPool.h"
 #include "AI/Factory.h"
 #include "AI/EnemyPool.h"
 namespace sf
@@ -39,7 +40,11 @@ private:
 
     std::shared_ptr<hero_base> hero_;
     std::vector<std::shared_ptr<Bullet_Base>> hero_bullets_;
-    
+
+    //两个对象池
+    std::unique_ptr<BulletPool> bulletPool_;
     std::unique_ptr<EnemyPool> enemyPool_;
+
+    //单例模式
     static Gamemanager* instance_;
 };

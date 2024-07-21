@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Core/Game.h"
 #include "Tools/GameLog.h"
+#include "Core/Config.h"
 
 int main()
 {
@@ -12,7 +13,7 @@ int main()
     LOG_GAME(spdlog::level::info, "----------START----------");
     
     //Initialize the game
-    Game game("Isaac : Circle", 1920, 1080, "Resource/images/ui/loadimages/loadimages-024.png");
+    Game game("Isaac : Circle", WINDOW_WIDTH, WINDOW_HEIGHT, "Resource/images/ui/loadimages/loadimages-024.png");
     game.runLoop();
     
     //Game end message

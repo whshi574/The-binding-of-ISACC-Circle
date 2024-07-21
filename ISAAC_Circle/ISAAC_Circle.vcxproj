@@ -150,6 +150,7 @@
     <ClCompile Include="..\imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\AI\Bullet.cpp" />
+    <ClCompile Include="Source\AI\BulletPool.cpp" />
     <ClCompile Include="Source\AI\Enemy.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -380,6 +381,7 @@
     <ClCompile Include="Source\Animation\SpriteAnimationClip.cpp" />
     <ClCompile Include="Source\Animation\SwingingSprite.cpp" />
     <ClCompile Include="Source\Core\Component\SpriteContainer.cpp" />
+    <ClCompile Include="Source\Core\Config.cpp" />
     <ClCompile Include="Source\Core\Object.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -612,6 +614,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AI\Bullet.h" />
+    <ClInclude Include="Source\AI\BulletPool.h" />
     <ClInclude Include="Source\AI\Enemy.h" />
     <ClInclude Include="Source\AI\EnemyPool.h" />
     <ClInclude Include="Source\AI\Factory.h" />
@@ -623,6 +626,7 @@
     <ClInclude Include="Source\Animation\SpriteAnimationClip.h" />
     <ClInclude Include="Source\Animation\SwingingSprite.h" />
     <ClInclude Include="Source\Core\Component\SpriteContainer.h" />
+    <ClInclude Include="Source\Core\Config.h" />
     <ClInclude Include="Source\Core\Object.h" />
     <ClInclude Include="Source\Core\Game.h" />
     <ClInclude Include="Source\Core\Gamemanager.h" />

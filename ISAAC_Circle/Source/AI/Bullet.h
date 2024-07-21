@@ -22,14 +22,17 @@ class Bullet_Base:public Object
         std::vector<sf::Texture*>   textures_;
         SpriteContainer SpriteContainer_;
 
+        
+    public: //常用的属性设置成public方便外部调用
+        //关于子弹伤害
+        float damage_;
+        int type_; 
         //关于子弹移动
         float move_direction_;
         float speed_;
-
-        //关于子弹伤害
-    public:
-        float damage_; //设置成public方便外部调用
-        
+        //关于子弹边界
+        bool is_out_of_bounds_;
+        void is_out_of_screen_();
     public:
         //子弹基类专属需要子类重载的, 用于初始化子弹的动画
         virtual void init();
@@ -40,6 +43,9 @@ class Bullet_Base:public Object
 
         //碰撞相关
         sf::FloatRect get_global_bounds() const;
+
+        //子弹池使用
+        void reset();
 };
 
 class Bullet_Player1:public Bullet_Base

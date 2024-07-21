@@ -7,7 +7,7 @@
 #include "Tools/GameLog.h"
 
 Gamemanager* Gamemanager::instance_ = nullptr;
-Gamemanager::Gamemanager(): enemyPool_(std::make_unique<EnemyPool>(5))
+Gamemanager::Gamemanager(): bulletPool_(std::make_unique<BulletPool>(5)), enemyPool_(std::make_unique<EnemyPool>(5))
 {
     CreateHero(1,300,300);
 }
@@ -52,9 +52,16 @@ void Gamemanager::update(sf::Time deltaTime)
         enemy->update(deltaTime);
     }
     hero_->update(deltaTime);
-    for (auto& bullet : hero_bullets_)
+    for (size_t i = 0; i < hero_bullets_.size(); ++i)
     {
+        auto& bullet = hero_bullets_[i];
         bullet->update(deltaTime);
+        if (bullet->is_out_of_bounds_)
+        {
+            bulletPool_->release_bullet(move(bullet));
+            hero_bullets_.erase(hero_bullets_.begin() + i);
+            --i; // 调整索引
+        }
     }
     check_collision();
 }
@@ -104,10 +111,13 @@ sf::Vector2f Gamemanager::get_attack_target_pos() const
 
 void Gamemanager::attack(float angle)
 {
-    auto t_factory_bullet = new factory_bullet();
-    auto bullet = t_factory_bullet->create_bullet(1, hero_->getPosition(),angle);
-    delete t_factory_bullet;
-    hero_bullets_.push_back(bullet);
+    const auto bullet = bulletPool_->acquire_bullet(1,hero_->getPosition(),angle);
+    if(bullet != nullptr)
+        hero_bullets_.push_back(bullet);
+    else
+    {
+        SPDLOG_ERROR("Max bullets reached");
+    }
 }
 
 void Gamemanager::check_collision()
@@ -129,6 +139,7 @@ void Gamemanager::check_collision()
                     enemyPool_->release_enemy(move(enemy));
                     enemies_.erase(enemies_.begin() + i);
                 }
+                bulletPool_->release_bullet(move(*it));
                 it = hero_bullets_.erase(it);
                 collision = true;
                 break;
